@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  survey_client: one
+  response: MyString
+  text_field_to_lead: one
+  option_field_to_lead: one
+
+two:
+  survey_client: two
+  response: MyString
+  text_field_to_lead: two
+  option_field_to_lead: two

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  client: one
+  report: one
+  initial_date: 2022-10-01 22:05:58
+  final_date: 2022-10-01 22:05:58
+
+two:
+  client: two
+  report: two
+  initial_date: 2022-10-01 22:05:58
+  final_date: 2022-10-01 22:05:58

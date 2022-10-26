@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type_story: MyString
+  link: MyString
+  description: MyString
+  datetime: MyString
+  goal: 
+  responsible_professional: one
+
+two:
+  type_story: MyString
+  link: MyString
+  description: MyString
+  datetime: MyString
+  goal: 
+  responsible_professional: two

@@ -1,0 +1,33 @@
+{
+  "name": "agenduu",
+  "private": true,
+  "dependencies": {
+    "@client-side-validations/client-side-validations": "^0.3.0",
+    "@nathanvda/cocoon": "^1.2.14",
+    "@popperjs/core": "^2.11.6",
+    "@rails/actioncable": "^6.0.0",
+    "@rails/actiontext": "^6.1.7",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "5.4.3",
+    "bootstrap": "^5.2.1",
+    "bootstrap-icons": "^1.9.1",
+    "boxicons": "^2.1.4",
+    "highlightjs": "^9.16.2",
+    "jquery": "^3.6.1",
+    "masonry-layout": "^4.2.2",
+    "perfect-scrollbar": "^1.5.5",
+    "popper.js": "^1.16.1",
+    "sortablejs": "^1.15.0",
+    "stimulus": "^3.1.0",
+    "toastr": "^2.1.4",
+    "trix": "^1.2.0",
+    "turbolinks": "^5.2.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "webpack-dev-server": "^3"
+  }
+}

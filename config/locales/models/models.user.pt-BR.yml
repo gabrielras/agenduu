@@ -1,0 +1,17 @@
+pt-BR:
+  activerecord:
+    models:
+      user:
+        one: Usuário
+        other: Usuários
+    attributes:
+      user:
+        id: id
+        full_name: nome completo
+        email: email
+        phone_number: celular
+        password: senha
+        password_confirmation: senha
+        invitation_status: situação do convite
+        created_at: data de criação
+        updated_at: data de atualização

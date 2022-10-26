@@ -1,0 +1,16 @@
+pt-BR:
+  activerecord:
+    models:
+      organization:
+        one: Organização
+        other: Organizações
+    attributes:
+      organization:
+        id: id
+        organization_id: organização
+        organization: organização
+        title: título
+        email: email
+        phone_number: telefone / celular
+        created_at: data de criação
+        updated_at: data de atualização

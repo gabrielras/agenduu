@@ -1,0 +1,29 @@
+= flash_message
+
+.content-wrapper
+  / Content
+  .container-xxl.flex-grow-1.container-p-y
+    %h4.fw-bold.py-3.mb-4
+      Usuários
+    .card.mb-4
+      %hr.m-0/
+      .card-body
+        .row.gy-3
+          .col-lg-4.col-md-6
+            = link_to 'Cadastrar', new_user_provider_role_path, class: 'btn btn-primary', "data-turbolinks": "false"
+
+      %h5.card-header Listagem de Usuários
+      .card-body
+        %div.mb-4
+          %input#defaultFormControlInput.form-control{"aria-describedby" => "defaultFormControlHelp", :placeholder => "John Doe", :type => "text"}/
+        .table-responsive.text-nowrap
+          %table.table
+            %thead
+              %tr
+                %th Nome
+                %th Cargo
+            %tbody.table-border-bottom-0
+              - @users.each do |user|
+                %tr
+                  %td= user.full_name
+                  %td= user.decorate.role.role_type

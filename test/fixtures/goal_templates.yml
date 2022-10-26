@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  primary_color: MyString
+  second_color: MyString
+  goal: one
+
+two:
+  primary_color: MyString
+  second_color: MyString
+  goal: two

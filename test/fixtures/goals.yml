@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company: one
+  client: one
+  title: MyString
+  user: one
+  update_interval_in_days: 1
+
+two:
+  company: two
+  client: two
+  title: MyString
+  user: two
+  update_interval_in_days: 1

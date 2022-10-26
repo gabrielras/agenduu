@@ -1,0 +1,32 @@
+= flash_message
+
+.content-wrapper
+  / Content
+  .container-xxl.flex-grow-1.container-p-y
+    %h4.fw-bold.py-3.mb-4
+      Clientes
+    .card.mb-4
+      %hr.m-0/
+      .card-body
+        .row.gy-3
+          .col-lg-4.col-md-6
+            = link_to 'Cadastrar', new_user_provider_manager_customer_path, class: 'btn btn-primary'
+
+      %h5.card-header Listagem de Clientes
+      .card-body
+        %div.mb-4
+          %input#defaultFormControlInput.form-control{"aria-describedby" => "defaultFormControlHelp", :placeholder => "John Doe", :type => "text"}/
+        .table-responsive.text-nowrap
+          %table.table
+            %thead
+              %tr
+                %th Project
+                %th Client
+                %th Users
+            %tbody.table-border-bottom-0
+              %tr
+                %td
+                  %strong Angular Project
+
+                
+              

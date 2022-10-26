@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  schedule: one
+  user: one
+  repeat: false
+  custom_schedule: 2022-09-18
+
+two:
+  schedule: two
+  user: two
+  repeat: false
+  custom_schedule: 2022-09-18

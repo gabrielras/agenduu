@@ -1,0 +1,16 @@
+pt-BR:
+  activerecord:
+    models:
+      role:
+        one: Cargo
+        other: Cargos
+    attributes:
+      role:
+        id: id
+        organization_id: organização
+        organization: organização
+        user: usuário
+        user_id: usuário
+        role_type: cargo
+        created_at: data de criação
+        updated_at: data de atualização

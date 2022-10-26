@@ -1,0 +1,18 @@
+.authentication-wrapper.authentication-basic.container-p-y
+  .authentication-inner.py-4
+    .card
+      .card-body
+        %h4.mb-2 Esqueceu a senha? 🔒
+        %p.mb-4 Digite seu e-mail e enviaremos instruções para redefinir sua senha
+        #formAuthentication.mb-3
+          = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+            .mb-3
+              = f.label :email, class: 'form-label'
+              = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', id: 'email'
+            %button.btn.btn-primary.d-grid.w-100 Enviar link de redefinição
+          .text-center
+            = link_to new_user_session_path do
+              .d-flex.align-items-center.justify-content-center
+                %i.bx.bx-chevron-left.scaleX-n1-rtl.bx-sm
+                Volte ao login
+

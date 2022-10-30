@@ -4,14 +4,14 @@ class User::Provider::RolesController < User::Provider::ProviderController
   before_action :set_user, only: %i[edit update destroy]
 
   def index
-    @q = policy_scope(User).ransack(params[:q])
+    @q = policy_scope(User).joins(:roles).where.not(roles: { role_type: 'customer'}).ransack(params[:q])
     result = @q.result(distinct: true).order(created_at: :desc)
     @pagy, @users = pagy(result, items: 10)
   end
 
   def new
     @user = User.new
-    @roles = @user.roles.build
+    @role = Role.new
   end
 
   def create
@@ -63,7 +63,7 @@ class User::Provider::RolesController < User::Provider::ProviderController
 
   def user_params
     params.require(:user).permit(
-      :full_name, :email, role: [:role_type].merge(organization_id: current_user.decorate.provider)
+      :full_name, :email, role: [:role_type]
     ).to_h
   end
 

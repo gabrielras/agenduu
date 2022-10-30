@@ -5,4 +5,5 @@ class Role < ApplicationRecord
   has_enumeration_for :role_type, with: RoleEnum::RoleTypes, create_helpers: true
 
   validates :role_type, presence: true
+  validates :user, uniqueness: { scope: :organization_id }
 end

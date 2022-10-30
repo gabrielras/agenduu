@@ -10,7 +10,7 @@
       .card-body
         .row.gy-3
           .col-lg-4.col-md-6
-            = link_to 'Cadastrar', new_user_provider_project_path, class: 'btn btn-primary', "data-turbolinks": "false"
+            = link_to 'Cadastrar', new_user_provider_project_path, class: 'btn btn-primary', "data-controller": "turbo"
 
       %h5.card-header Listagem de Projetos
       .card-body
@@ -20,14 +20,16 @@
           %table.table
             %thead
               %tr
-                %th Formulário
-                %th Respostas
-                %th Gerenciar
+                %th Título
+                %th
             %tbody.table-border-bottom-0
               - @projects.each do |project|
                 %tr
                   %td
                     %strong= project.title
+                  %td
+                    = link_to t("helpers.show"), user_provider_manager_project_folders_path(project),
+                                                  class: 'btn btn-danger btn-sm'
                   
 
                 

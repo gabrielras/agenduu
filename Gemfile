@@ -45,6 +45,7 @@ gem 'friendly_id', '~> 5.4.0'
 gem 'client_side_validations'
 gem 'inline_svg'
 gem 'acts_as_list'
+gem 'turbo-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

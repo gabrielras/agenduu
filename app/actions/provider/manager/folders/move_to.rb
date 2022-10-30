@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Users
+module Provider
   module Manager
     module Folders
       class MoveTo < Actor
-        input :folders, type: Enumerable
+        input :folder_ids, type: Enumerable
         input :destined_folder, type: Folder
 
         def call

@@ -1,0 +1,9 @@
+= turbo_frame_tag :remote_modal, target: :_top do
+  .modal.fade{"data-controller" => "modal"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %h5.modal-title Modal title
+          %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", type: "button"}
+        .modal-body
+          = render "user/provider/projects/form", project: project

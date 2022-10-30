@@ -1,5 +1,5 @@
 class Accessibility < ApplicationRecord
-  ALLOWED_FOLDABLE_TYPES = %w[Folder Project].freeze
+  ALLOWED_FOLDABLE_TYPES = %w[Project].freeze
 
   belongs_to :foldable, polymorphic: true
   belongs_to :user

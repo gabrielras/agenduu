@@ -21,7 +21,7 @@ class User::Provider::OrganizationsController < User::Provider::ProviderControll
       redirect_to user_provider_projects_path, notice: 'Sua organização foi cadastrada'
     else
       flash[:alert] = result.error
-      @organization = result.organization
+      @organization = result.provider
 
       render :new
     end

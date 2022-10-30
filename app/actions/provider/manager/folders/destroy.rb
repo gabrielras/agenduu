@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Users
+module Provider
   module Manager
     module Folders
       class Destroy < Actor

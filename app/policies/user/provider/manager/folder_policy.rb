@@ -24,7 +24,7 @@ class User::Provider::Manager::FolderPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.joins(provider: :users).where(users: { id: user.id})
+      scope.joins(project: :organization).where(organization: { id: user.decorate.provider.id })
     end
 
     private

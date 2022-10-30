@@ -19,9 +19,7 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
     t.string "foldable_type"
     t.bigint "foldable_id"
     t.bigint "user_id", null: false
-    t.string "permission_to_view"
-    t.string "permission_to_create_and_edit"
-    t.string "permission_to_create_and_edit_other"
+    t.string "allows"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["foldable_type", "foldable_id"], name: "index_accessibilities_on_foldable"
@@ -68,11 +66,13 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
 
   create_table "folders", force: :cascade do |t|
     t.bigint "project_id", null: false
+    t.bigint "creator_id"
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "foldable_id"
     t.string "slug"
+    t.index ["creator_id"], name: "index_folders_on_creator_id"
     t.index ["foldable_id"], name: "index_folders_on_foldable_id"
     t.index ["project_id"], name: "index_folders_on_project_id"
     t.index ["slug"], name: "index_folders_on_slug", unique: true
@@ -101,9 +101,11 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
 
   create_table "messages", force: :cascade do |t|
     t.bigint "task_id", null: false
+    t.bigint "creator_id"
     t.boolean "send_email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["creator_id"], name: "index_messages_on_creator_id"
     t.index ["task_id"], name: "index_messages_on_task_id"
   end
 
@@ -140,8 +142,8 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
   create_table "project_notifications", force: :cascade do |t|
     t.bigint "project_id", null: false
     t.bigint "user_id", null: false
-    t.string "receive_email_when_tagged"
-    t.string "receive_email_when_client_responds"
+    t.boolean "receive_email_when_tagged"
+    t.boolean "receive_email_when_client_responds"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_project_notifications_on_project_id"
@@ -153,7 +155,9 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
     t.index ["organization_id"], name: "index_projects_on_organization_id"
+    t.index ["slug"], name: "index_projects_on_slug", unique: true
   end
 
   create_table "roles", force: :cascade do |t|
@@ -184,13 +188,17 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
   create_table "tasks", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "folder_id"
+    t.bigint "creator_id"
     t.string "title"
     t.string "link"
     t.string "type_task"
     t.boolean "send_email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
+    t.index ["creator_id"], name: "index_tasks_on_creator_id"
     t.index ["folder_id"], name: "index_tasks_on_folder_id"
+    t.index ["slug"], name: "index_tasks_on_slug", unique: true
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
@@ -198,7 +206,9 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
     t.string "full_name"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.boolean "invitation_status"
+    t.boolean "invitation", default: false
+    t.boolean "blocked", default: false
+    t.string "email_security_key"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -213,8 +223,10 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "folders", "folders", column: "foldable_id"
   add_foreign_key "folders", "projects"
+  add_foreign_key "folders", "users", column: "creator_id"
   add_foreign_key "mentions", "users"
   add_foreign_key "messages", "tasks"
+  add_foreign_key "messages", "users", column: "creator_id"
   add_foreign_key "notifications", "users"
   add_foreign_key "previews", "users"
   add_foreign_key "project_notifications", "projects"
@@ -224,4 +236,5 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
   add_foreign_key "roles", "users"
   add_foreign_key "tasks", "folders"
   add_foreign_key "tasks", "users"
+  add_foreign_key "tasks", "users", column: "creator_id"
 end

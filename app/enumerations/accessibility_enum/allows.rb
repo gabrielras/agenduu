@@ -2,6 +2,6 @@
 
 module AccessibilityEnum
   class Allows < EnumerateIt::Base
-    associate_values(:to_view, :interact, :manager)
+    associate_values(:interact, :manager)
   end
 end

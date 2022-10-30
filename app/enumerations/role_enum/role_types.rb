@@ -2,6 +2,6 @@
 
 module RoleEnum
   class RoleTypes < EnumerateIt::Base
-    associate_values(:customer, :owner, :admin, :manager, :employee)
+    associate_values(:customer, :owner, :admin, :employee)
   end
 end

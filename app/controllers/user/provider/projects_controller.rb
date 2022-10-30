@@ -11,24 +11,27 @@ class User::Provider::ProjectsController < User::Provider::ProviderController
 
   def new
     @project = Project.new
-    @project_notifications = @project.project_notifications.build
   end
+
   def create
     result = ::Provider::Projects::Create.result(
+      current_user: current_user,
       attributes: project_params
     )
 
     if result.success?
       redirect_to user_provider_manager_project_folders_path(result.project), notice: 'criado'
     else
-      flash[:alert] = result.error
+      @message_error = result.error
+      @project = result.project
 
-      render :new
+      render :new, status: :unprocessable_entity 
     end
   end
 
   def update
     result = ::Provider::Projects::Update.result(
+      current_user: current_user,
       project: @project,
       attributes: project_params
     )
@@ -60,9 +63,7 @@ class User::Provider::ProjectsController < User::Provider::ProviderController
   private
 
   def project_params
-    params.require(:project).permit(
-      :title, :user_ids, project_notifications: [:receive_email_when_tagged, :receive_email_when_client_responds]
-    ).merge(customer: @customer).to_h
+    params.require(:project).permit(:title).merge(organization: current_user.decorate.provider).to_h
   end
 
   def set_project

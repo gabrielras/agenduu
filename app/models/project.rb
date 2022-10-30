@@ -1,4 +1,7 @@
 class Project < ApplicationRecord
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   belongs_to :organization
 
   has_many :accessibilities, as: :foldable
@@ -8,5 +11,6 @@ class Project < ApplicationRecord
 
   accepts_nested_attributes_for :project_notifications, reject_if: :all_blank, allow_destroy: true
 
+  validates :title, uniqueness: { scope: :organization_id }
   validates :title, presence: true
 end

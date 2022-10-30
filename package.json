@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "@client-side-validations/client-side-validations": "^0.3.0",
+    "@hotwired/turbo-rails": "^7.2.4",
     "@nathanvda/cocoon": "^1.2.14",
     "@popperjs/core": "^2.11.6",
     "@rails/actioncable": "^6.0.0",
@@ -12,6 +13,7 @@
     "@rails/webpacker": "5.4.3",
     "bootstrap": "^5.2.1",
     "bootstrap-icons": "^1.9.1",
+    "bootstrap-select": "^1.13.18",
     "boxicons": "^2.1.4",
     "highlightjs": "^9.16.2",
     "jquery": "^3.6.1",

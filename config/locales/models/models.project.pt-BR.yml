@@ -1,0 +1,14 @@
+pt-BR:
+  activerecord:
+    models:
+      project:
+        one: Projeto
+        other: Projetos
+    attributes:
+      project:
+        id: id
+        organization_id: organização
+        organization: organização
+        title: título
+        created_at: data de criação
+        updated_at: data de atualização

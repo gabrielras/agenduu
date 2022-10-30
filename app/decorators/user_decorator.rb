@@ -14,6 +14,10 @@ class UserDecorator < ApplicationDecorator
   end
 
   def provider
-    role.organization
-  end  
+    role.try(:organization)
+  end
+
+  def accessibility(project)
+    Accessibility.where(user: object, project: project).take
+  end
 end

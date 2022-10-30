@@ -1,26 +1,6 @@
 # frozen_string_literal: true
 
 class User::Provider::Manager::OrganizationPolicy < ApplicationPolicy
-  def index?
-    true
-  end
-
-  def create?
-    true
-  end
-
-  def new?
-    true
-  end
-
-  def edit?
-    true
-  end
-
-  def update?
-    true
-  end
-
   class Scope
     def initialize(user, scope)
       @user  = user
@@ -28,7 +8,7 @@ class User::Provider::Manager::OrganizationPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.joins("JOIN roles on roles.organization_id = organizations.provider_id").where(roles: { user_id: user.id })
+      scope.joins(:roles).where(roles: { user_id: user.id })
     end
 
     private

@@ -1,0 +1,25 @@
+= form_with model: user,
+            url: (user.new_record? ? user_provider_customers_path : user_provider_customer_path(user)),
+            html: { class: 'require-validation' }, validate: true do |f|
+  - if @message_error.present?
+    %div{style: "color: red"}
+      %ul
+        %li= @message_error
+
+  .mb-4
+    .mb-3
+      = f.label :full_name, class: 'col-form-label'
+      = f.text_field :full_name,
+                  autofocus: true,
+                  require: true,
+                  class: 'form-control'
+      .letter-counter.mt-2.d-flex.justify-content-end
+
+    .mb-3
+      = f.label :email, class: 'col-form-label'
+      = f.email_field :email, class: 'form-control'
+
+      .letter-counter.mt-2.d-flex.justify-content-end
+  .row
+    .d-grid.gap-2.col-3.mx-auto.mb-3
+      = f.submit t('.confirm', default: t("helpers.submit.save")), class: 'btn btn-secondary rounded-pill'

@@ -13,8 +13,8 @@ module Provider
           self.provider = Organization.new(attributes)
           provider.save!
 
-          if Role.where.not(organization: provider, user: owner, role_type: 'customer').present?
-            fail!(error: 'Seu e-mail já tem cadastro em uma empresa.')
+          if Role.where(organization: provider, user: owner, role_type: 'owner').present?
+            fail!(error: 'Seu e-mail já tem cadastro como proprietário em uma empresa.')
           end
           Role.create!(role_type: 'owner', user: owner, organization: provider)
         end

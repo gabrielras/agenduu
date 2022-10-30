@@ -12,4 +12,6 @@ class User < ApplicationRecord
   has_many :notifications
   has_many :project_notifications
   has_many :previews
+
+  validates :full_name, presence: true
 end

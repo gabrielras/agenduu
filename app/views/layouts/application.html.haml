@@ -21,45 +21,6 @@
 
         / Layout container
         .layout-page
-          / Navbar
-          %nav#layout-navbar.layout-navbar.container-xxl.navbar.navbar-expand-xl.navbar-detached.align-items-center.bg-navbar-theme
-            .layout-menu-toggle.navbar-nav.align-items-xl-center.me-3.me-xl-0.d-xl-none
-              %a.nav-item.nav-link.px-0.me-xl-4{:href => "javascript:void(0)"}
-                %i.bx.bx-menu.bx-sm
-            #navbar-collapse.navbar-nav-right.d-flex.align-items-center              
-              %ul.navbar-nav.flex-row.align-items-center.ms-auto
-                %li.nav-item.navbar-dropdown.dropdown-user.dropdown
-                  %a.nav-link.dropdown-toggle.hide-arrow{"data-bs-toggle" => "dropdown", :href => "javascript:void(0);"}
-                    %i.bx.bx-user-circle
-                  %ul.dropdown-menu.dropdown-menu-end
-                    %li
-                      %a.dropdown-item{:href => "#"}
-                        %span.fw-semibold.d-block John Doe
-                        %small.text-muted Admin
-                    %li
-                      .dropdown-divider
-                    %li
-                      %a.dropdown-item{:href => "#"}
-                        %i.bx.bx-user.me-2
-                        %span.align-middle My Profile
-                    %li
-                      %a.dropdown-item{:href => "#"}
-                        %i.bx.bx-cog.me-2
-                        %span.align-middle Settings
-                    %li
-                      %a.dropdown-item{:href => "#"}
-                        %span.d-flex.align-items-center.align-middle
-                          %i.flex-shrink-0.bx.bx-credit-card.me-2
-                          %span.flex-grow-1.align-middle Billing
-                          %span.flex-shrink-0.badge.badge-center.rounded-pill.bg-danger.w-px-20.h-px-20 4
-                    %li
-                      .dropdown-divider
-                    %li
-                      = button_to destroy_user_session_path, class: 'dropdown-item', method: :delete do
-                        %i.bx.bx-power-off.me-2
-                        %span.align-middle Sair
-                / / User
-          / / Navbar
           / Content wrapper
           .content-wrapper
             = yield

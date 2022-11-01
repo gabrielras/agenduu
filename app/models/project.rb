@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   friendly_id :title, use: :slugged
 
   belongs_to :organization
+  belongs_to :user, optional: true
 
   has_many :accessibilities, as: :foldable
   has_many :folders, dependent: :destroy

@@ -2,12 +2,14 @@
 
 module Provider
   module Manager
-    module Tasks
-      class Destroy < Actor
-        input :task, type: Task
+    module Messages
+      class SendEmail < Actor
+        input :message, type: Message
 
         def call
-          self.task.destroy
+          ActiveRecord::Base.transaction do
+            
+          end
         rescue StandardError => e
           fail!(error: e.message)
         end

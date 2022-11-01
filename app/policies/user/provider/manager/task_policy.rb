@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User::Provider::Manager::FolderPolicy < ApplicationPolicy
+class User::Provider::Manager::TaskPolicy < ApplicationPolicy
   def index?
     true
   end

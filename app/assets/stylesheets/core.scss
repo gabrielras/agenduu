@@ -46,7 +46,7 @@
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.53;
   --bs-body-color: #697a8d;
-  --bs-body-bg: #D1F2EB;
+  --bs-body-bg: #f2f2f2;
 }
 
 *,
@@ -224,7 +224,7 @@ sup {
 }
 
 a {
-  color: #696cff;
+  color: #233446;
   text-decoration: none;
 }
 a:hover {
@@ -2792,7 +2792,7 @@ textarea.form-control-lg {
 
 .btn-link {
   font-weight: 400;
-  color: #696cff;
+  color: #233446;
   text-decoration: none;
 }
 .btn-link:hover {
@@ -10118,7 +10118,7 @@ button.list-group-item-gray.active {
 
 .bg-body {
   --bs-bg-opacity: 1;
-  background-color: #D1F2EB !important;
+  background-color: #f2f2f2 !important;
 }
 
 .bg-transparent {

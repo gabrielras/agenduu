@@ -15,10 +15,21 @@
                 %i.menu-icon.tf-icons.bx.bx-folder
                 Adicionar Arquivo
 
-            = link_to new_user_provider_manager_project_task_path(@project) do
+            = link_to new_user_provider_manager_project_task_path(@project, folder_id: @folder) do
               %button.btn.btn-warning 
                 %i.menu-icon.tf-icons.bx.bx-purchase-tag 
                 Adicionar Atividade
+
+            - if @folder.foldable.present?
+              = link_to user_provider_manager_project_folder_path(@project, @folder.foldable) do
+                %button.btn.btn-secondary 
+                  %i.menu-icon.tf-icons.bx.bx-arrow-back
+                  = @folder.foldable.title
+            - else
+              = link_to user_provider_manager_project_folders_path(@project) do
+                %button.btn.btn-secondary 
+                  %i.menu-icon.tf-icons.bx.bx-arrow-back
+                  = @project.title
       - unless @folders.present? || @tasks.present?
         = image_tag "Documents-cuate.svg", style: 'height: 500px;'
       - else

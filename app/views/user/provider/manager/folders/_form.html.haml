@@ -1,32 +1,21 @@
-
 = flash_message
 
-= form_with model: @customer,
-            url: (@customer.new_record? ? user_provider_manager_customers_path : user_provider_manager_customer_path(@customer)),
+= form_with model: folder,
+            url: (folder.new_record? ? user_provider_manager_project_folders_path(@project) : user_provider_manager_project_folder_path(@project, folder)),
+            method: (folder.new_record? ? :post : :put),
             html: { class: 'require-validation' }, validate: true do |f|
+  - if @message_error.present?
+    %div{style: "color: red"}
+      %ul
+        %li= @message_error
 
-  .card.mb-4
-    .card-body
-      .mb-3
-        = f.label :title, class: 'col-sm-2 col-form-label'
-        = f.text_field :title,
-                    autofocus: true,
-                    class: 'form-control'
-        .letter-counter.mt-2.d-flex.justify-content-end
-      .mb-3
-        = f.label :email, class: 'col-sm-2 col-form-label'
-        = f.email_field :email, class: 'form-control'
-      .mb-3
-        = f.label :phone_number, class: 'col-sm-2 col-form-label'
-        = f.text_field :phone_number, class: 'form-control'
-      .mb-3
-        = f.label :primary_color, class: 'col-sm-2 col-form-label'
-        = f.text_field :primary_color, class: 'form-control'
-      .mb-3
-        = f.label :second_color, class: 'col-sm-2 col-form-label'
-        = f.text_field :second_color, class: 'form-control'
+  .mb-3
+    = f.label :title, class: 'col-sm-6 col-form-label'
+    = f.text_field :title,
+                autofocus: true,
+                class: 'form-control'
+    .letter-counter.mt-2.d-flex.justify-content-end
 
-    .row
-      .d-grid.gap-2.col-3.mx-auto.mb-3
-        = f.submit t('.confirm', default: t("helpers.submit.save")), class: 'btn btn-secondary rounded-pill'
-
+  .row
+    .d-grid.gap-2.col-3.mx-auto.mb-3
+      = f.submit t('.confirm', default: t("helpers.submit.save")), class: 'btn btn-secondary rounded-pill'

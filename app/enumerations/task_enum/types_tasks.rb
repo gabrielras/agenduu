@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TaskEnum
-  class TypesTask < EnumerateIt::Base
+  class TypesTasks < EnumerateIt::Base
     associate_values(:activity, :scheduled_activity)
   end
 end

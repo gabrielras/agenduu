@@ -21,12 +21,9 @@ Rails.application.routes.draw do
 
           resources :accessibilities
           resources :notifications
-          resources :folders do
-            resources :accessibilities
-          end
+          resources :folders
           resources :tasks do
             resources :messages
-            resources :accessibilities
           end
         end
       end

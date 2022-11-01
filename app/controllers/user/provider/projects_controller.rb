@@ -5,7 +5,7 @@ class User::Provider::ProjectsController < User::Provider::ProviderController
 
   def index
     @q = policy_scope(Project).ransack(params[:q])
-    result = @q.result(distinct: true).order(created_at: :desc)
+    result = @q.result(distinct: true).includes(:user).order(created_at: :desc)
     @pagy, @projects = pagy(result, items: 10)
   end
 

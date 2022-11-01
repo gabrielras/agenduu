@@ -14,7 +14,7 @@ module Provider
           project.save!
   
           Manager::Accessibilities::Create.result(
-            attributes: { project: project, user: current_user }
+            attributes: { project: project, user: current_user, allows: 'manager' }
           )
         end
       rescue StandardError => e

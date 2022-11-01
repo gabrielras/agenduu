@@ -1,0 +1,81 @@
+= flash_message
+
+= render partial: 'user/provider/manager/provider_menu', cache: true
+
+.content-wrapper
+  .container-xxl.flex-grow-1.container-p-y
+    .row
+      .col-md-6.mx-auto
+        .card.mb-4
+          .card-body
+            
+            .demo-inline-spacing
+              - if @folder.present?
+                = link_to user_provider_manager_project_folder_path(@project, @folder) do
+                  %button.btn.btn-secondary 
+                    %i.menu-icon.tf-icons.bx.bx-arrow-back
+              - else
+                = link_to user_provider_manager_project_folders_path(@project) do
+                  %button.btn.btn-secondary 
+                    %i.menu-icon.tf-icons.bx.bx-arrow-back
+            .mb-4
+              .card-body
+                .mb-3
+                  %h4.fw-bold.py-3.mb-4
+                    = @task.title
+                .mb-3
+                  = @task.link
+                .mb-3
+                  = @task.description
+
+      .col-md-6.mx-auto
+        .card{style: 'height: 100%'}
+          .py-2.px-4.border-bottom.d-none.d-lg-block
+            .d-flex.align-items-center.py-1
+              .position-relative
+                %i.menu-icon.tf-icons.bx.bx-message-square-dots
+              .flex-grow-1.pl-3
+                %strong= current_user.full_name
+
+              %div
+                = link_to user_provider_manager_project_folders_path(@project) do
+                  %button.btn.btn-warning.btn-lg.mr-1.px-3
+                    %i.menu-icon.tf-icons.bx.bx-user
+                    Clientes
+                = link_to user_provider_manager_project_folders_path(@project) do
+                  %button.btn.btn-dark.btn-lg.mr-1.px-3
+                    %i.menu-icon.tf-icons.bx.bx-buildings
+                    Empresa
+                
+                
+          .position-relative{style: 'height: 100%;'}
+            .chat-messages.p-4
+              .chat-message-left.pb-4
+                %div
+                .flex-shrink-1.bg-light.rounded.py-2.px-3.ml-3
+                  .font-weight-bold.mb-1 Sharon Lessman
+                  Sed pulvinar, massa vitae interdum pulvinar, risus lectus porttitor magna, vitae commodo lectus mauris et velit.
+                  Proin ultricies placerat imperdiet. Morbi varius quam ac venenatis tempus.
+        
+          .flex-grow-0.py-3.px-4.border-top
+            - @task = Task.new
+            = form_with model: @task,
+                        url: (@task.new_record? ? user_provider_manager_project_tasks_path(@project) : user_provider_manager_project_task_path(@project, @task)),
+                        html: { class: 'require-validation' }, validate: true do |f|
+              .mb-4
+                = f.label :description, 'Menção', class: 'col-sm-2 col-form-label'
+                = f.collection_select :user_id,
+                                    User.all.order(:full_name).uniq, :id, :full_name,
+                                    { include_blank: true },
+                                    required: true,
+                                    data: { size: 5, 'live-search' => true },
+                                    class: 'form-control selectpicker'
+              .mb-4
+                = f.label :description, class: 'col-sm-2 col-form-label'
+                = f.rich_text_area :description
+              .mb-4
+                .form-check
+                  %input.form-check-input{checked: "checked", type: "checkbox", value: ""}/
+                  %label.form-check-label{for: "defaultCheck3"} Enviar E-mail
+
+     

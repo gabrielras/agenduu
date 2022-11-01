@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_22_135925) do
+ActiveRecord::Schema.define(version: 2022_10_22_135949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,17 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["foldable_type", "foldable_id"], name: "index_accessibilities_on_foldable"
     t.index ["user_id"], name: "index_accessibilities_on_user_id"
+  end
+
+  create_table "accessibility_notifications", force: :cascade do |t|
+    t.bigint "accessibility_id", null: false
+    t.bigint "project_id", null: false
+    t.boolean "receive_email_when_tagged"
+    t.boolean "receive_email_when_responds"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["accessibility_id"], name: "index_accessibility_notifications_on_accessibility_id"
+    t.index ["project_id"], name: "index_accessibility_notifications_on_project_id"
   end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
@@ -139,25 +150,16 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
     t.index ["viewer_type", "viewer_id"], name: "index_previews_on_viewer"
   end
 
-  create_table "project_notifications", force: :cascade do |t|
-    t.bigint "project_id", null: false
-    t.bigint "user_id", null: false
-    t.boolean "receive_email_when_tagged"
-    t.boolean "receive_email_when_client_responds"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["project_id"], name: "index_project_notifications_on_project_id"
-    t.index ["user_id"], name: "index_project_notifications_on_user_id"
-  end
-
   create_table "projects", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
+    t.bigint "user_id"
     t.index ["organization_id"], name: "index_projects_on_organization_id"
     t.index ["slug"], name: "index_projects_on_slug", unique: true
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -186,7 +188,6 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.bigint "folder_id"
     t.bigint "creator_id"
     t.string "title"
@@ -196,10 +197,11 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
+    t.bigint "project_id"
     t.index ["creator_id"], name: "index_tasks_on_creator_id"
     t.index ["folder_id"], name: "index_tasks_on_folder_id"
+    t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["slug"], name: "index_tasks_on_slug", unique: true
-    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -219,6 +221,8 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
   end
 
   add_foreign_key "accessibilities", "users"
+  add_foreign_key "accessibility_notifications", "accessibilities"
+  add_foreign_key "accessibility_notifications", "projects"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "folders", "folders", column: "foldable_id"
@@ -229,12 +233,11 @@ ActiveRecord::Schema.define(version: 2022_10_22_135925) do
   add_foreign_key "messages", "users", column: "creator_id"
   add_foreign_key "notifications", "users"
   add_foreign_key "previews", "users"
-  add_foreign_key "project_notifications", "projects"
-  add_foreign_key "project_notifications", "users"
   add_foreign_key "projects", "organizations"
+  add_foreign_key "projects", "users"
   add_foreign_key "roles", "organizations"
   add_foreign_key "roles", "users"
   add_foreign_key "tasks", "folders"
-  add_foreign_key "tasks", "users"
+  add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "users", column: "creator_id"
 end

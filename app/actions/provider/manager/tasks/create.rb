@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Users
+module Provider
   module Manager
     module Tasks
       class Create < Actor

@@ -4,11 +4,11 @@ module Provider
   module Manager
     module Folders
       class MoveTo < Actor
-        input :folder_ids, type: Enumerable
-        input :destined_folder, type: Folder
+        input :folder_id, type: String
+        input :destined_folder_id, type: String
 
         def call
-          folder.update!(archivable: destined_folder)
+          Folder.find(folder_id).update!(foldable: Folder.find(destined_folder_id))
         rescue StandardError => e
           fail!(error: e.message)
         end

@@ -3,6 +3,21 @@
 .content-wrapper
   / Content
   .container-xxl.flex-grow-1.container-p-y
+    .row
+      .col-md-8.mx-auto
+        .card.mb-3.bg-primary
+          .row.g-0
+            .col-md-4
+              = image_tag "New employee-pana.svg", class: 'card-img card-img-left'
+            .col-md-8
+              .card-body
+                %h5.card-title Card title
+                %p.card-text
+                  This is a wider card with supporting text below as a natural lead-in to additional content.
+                  This content is a little bit longer.
+                %p.card-text
+                  %small.text-muted Last updated 3 mins ago
+
     %h4.fw-bold.py-3.mb-4
       Usuários
     
@@ -19,7 +34,7 @@
         %div.mb-4
           %input#defaultFormControlInput.form-control{"aria-describedby" => "defaultFormControlHelp", :placeholder => "John Doe", :type => "text"}/
         .table-responsive.text-nowrap
-          %table.table
+          %table.table.table-dark
             %thead
               %tr
                 %th Nome

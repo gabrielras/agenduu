@@ -8,6 +8,7 @@ class Folder < ApplicationRecord
   has_many :foldables, class_name: 'Folder', foreign_key: 'foldable_id'
 
   validates :title, presence: true
+  validates :allow_clients_task, inclusion: { in: [ true, false ] }
 
   validate :valid_foldable, if: [:foldable_id?, :project_id?]
 

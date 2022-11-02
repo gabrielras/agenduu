@@ -2,7 +2,7 @@ class Preview < ApplicationRecord
   ALLOWED_VIEWER_TYPES = %w[Task Message].freeze
 
   belongs_to :user
-  belongs_to :viewer, polymorphic: true
+  belongs_to :task, polymorphic: true
 
   validate :valid_viewer_type, if: [:viewer_type?]
 

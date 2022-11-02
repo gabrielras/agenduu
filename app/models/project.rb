@@ -10,6 +10,7 @@ class Project < ApplicationRecord
   has_many :accessibility_notifications, dependent: :destroy
   has_many :users, :through => :accessibilities
   has_many :tasks, dependent: :destroy
+  has_many :invitations, dependent: :destroy
 
   validates :title, uniqueness: { scope: :organization_id }
   validates :title, presence: true

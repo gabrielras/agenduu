@@ -10,7 +10,7 @@ module Provider
 
         def call
           ActiveRecord::Base.transaction do
-            self.task = Task.new(attributes)
+            self.task = Task.new(attributes.except(:files))
             task.save!
 
             upload_files
@@ -23,11 +23,7 @@ module Provider
 
         def upload_files
           return if attributes[:files].blank?
-          if task.files.attached?
-            task.files.each do |doc|
-              doc.purge
-            end
-          end
+          
 
           task.files.attach(attributes[:files])
         end

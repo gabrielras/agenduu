@@ -5,12 +5,10 @@ class User::Provider::Manager::FoldersController < User::Provider::Manager::Mana
   before_action :set_folder, except: %i[index new create]
 
   def index
-    @q = policy_scope(Folder).where(project: @project).ransack(params[:q])
-    result = @q.result(distinct: true).order(title: :asc)
-    @pagy, @folders = pagy(result, items: 10)
+    @folders = policy_scope(Folder).where(project: @project)
 
-    @qt = policy_scope(Task).where(project: @project, folder: nil).ransack(params[:qt])
-    result = @qt.result(distinct: true).order(title: :asc)
+    @q = policy_scope(Task).where(project: @project, folder: nil).ransack(params[:q])
+    result = @q.result(distinct: true).order(title: :asc)
     @pagy, @tasks = pagy(result, items: 10)
   end
 

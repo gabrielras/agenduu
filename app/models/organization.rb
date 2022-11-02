@@ -7,6 +7,7 @@ class Organization < ApplicationRecord
 
   has_many :roles, dependent: :destroy
   has_many :users, through: :roles
+  has_many :invitations, dependent: :destroy
 
   validates :email, format: { with: /\A[^@\s]+@[^@\s]+\z/ }, presence: true
 

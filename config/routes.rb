@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       resources :organizations, except: [:index, :destroy, :show]
       resources :projects, except: [:show]
       resources :roles, except: [:show]
-      resources :customers, except: [:show]
+      resources :customers, only: [:index, :destroy]
     end
   end
 end

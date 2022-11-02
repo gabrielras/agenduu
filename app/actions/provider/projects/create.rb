@@ -10,7 +10,7 @@ module Provider
 
       def call
         ActiveRecord::Base.transaction do
-          self.project = Project.new(attributes)
+          self.project = Project.new(attributes.merge(creator: current_user))
           project.save!
   
           Manager::Accessibilities::Create.result(

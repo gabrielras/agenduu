@@ -4,7 +4,6 @@ pt-BR:
       role_types:
         customer: cliente
         owner: proprietário
-        manager: gerente
         employee: funcionário
         admin: administrador
     task_enum:

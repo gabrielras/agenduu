@@ -10,31 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_22_135949) do
+ActiveRecord::Schema.define(version: 2022_11_02_165855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accessibilities", force: :cascade do |t|
-    t.string "foldable_type"
-    t.bigint "foldable_id"
+    t.bigint "project_id", null: false
     t.bigint "user_id", null: false
     t.string "allows"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["foldable_type", "foldable_id"], name: "index_accessibilities_on_foldable"
+    t.index ["project_id"], name: "index_accessibilities_on_project_id"
     t.index ["user_id"], name: "index_accessibilities_on_user_id"
+  end
+
+  create_table "accessibility_folders", force: :cascade do |t|
+    t.bigint "folder_id", null: false
+    t.bigint "user_id", null: false
+    t.string "allows"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["folder_id"], name: "index_accessibility_folders_on_folder_id"
+    t.index ["user_id"], name: "index_accessibility_folders_on_user_id"
   end
 
   create_table "accessibility_notifications", force: :cascade do |t|
     t.bigint "accessibility_id", null: false
-    t.bigint "project_id", null: false
-    t.boolean "receive_email_when_tagged"
-    t.boolean "receive_email_when_responds"
+    t.boolean "receive_email_when_tagged", default: false, null: false
+    t.boolean "receive_email_when_responds", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["accessibility_id"], name: "index_accessibility_notifications_on_accessibility_id"
-    t.index ["project_id"], name: "index_accessibility_notifications_on_project_id"
   end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
@@ -100,6 +107,18 @@ ActiveRecord::Schema.define(version: 2022_10_22_135949) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "invitations", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "project_id"
+    t.string "key"
+    t.string "role_type"
+    t.datetime "expires_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_invitations_on_organization_id"
+    t.index ["project_id"], name: "index_invitations_on_project_id"
+  end
+
   create_table "mentions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "viewer_type"
@@ -126,6 +145,9 @@ ActiveRecord::Schema.define(version: 2022_10_22_135949) do
     t.string "link"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "project_id"
+    t.boolean "visualized", default: false
+    t.index ["project_id"], name: "index_notifications_on_project_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -156,10 +178,10 @@ ActiveRecord::Schema.define(version: 2022_10_22_135949) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
-    t.bigint "user_id"
+    t.bigint "creator_id"
+    t.index ["creator_id"], name: "index_projects_on_creator_id"
     t.index ["organization_id"], name: "index_projects_on_organization_id"
     t.index ["slug"], name: "index_projects_on_slug", unique: true
-    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -187,6 +209,15 @@ ActiveRecord::Schema.define(version: 2022_10_22_135949) do
     t.index ["taskable_type", "taskable_id"], name: "index_schedules_on_taskable"
   end
 
+  create_table "task_files", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "creator_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["creator_id"], name: "index_task_files_on_creator_id"
+    t.index ["task_id"], name: "index_task_files_on_task_id"
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.bigint "folder_id"
     t.bigint "creator_id"
@@ -198,6 +229,7 @@ ActiveRecord::Schema.define(version: 2022_10_22_135949) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
     t.bigint "project_id"
+    t.boolean "allow_clients_task", default: true
     t.index ["creator_id"], name: "index_tasks_on_creator_id"
     t.index ["folder_id"], name: "index_tasks_on_folder_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
@@ -208,6 +240,7 @@ ActiveRecord::Schema.define(version: 2022_10_22_135949) do
     t.string "full_name"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "phone_number"
     t.boolean "invitation", default: false
     t.boolean "blocked", default: false
     t.string "email_security_key"
@@ -220,23 +253,30 @@ ActiveRecord::Schema.define(version: 2022_10_22_135949) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "accessibilities", "projects"
   add_foreign_key "accessibilities", "users"
+  add_foreign_key "accessibility_folders", "folders"
+  add_foreign_key "accessibility_folders", "users"
   add_foreign_key "accessibility_notifications", "accessibilities"
-  add_foreign_key "accessibility_notifications", "projects"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "folders", "folders", column: "foldable_id"
   add_foreign_key "folders", "projects"
   add_foreign_key "folders", "users", column: "creator_id"
+  add_foreign_key "invitations", "organizations"
+  add_foreign_key "invitations", "projects"
   add_foreign_key "mentions", "users"
   add_foreign_key "messages", "tasks"
   add_foreign_key "messages", "users", column: "creator_id"
+  add_foreign_key "notifications", "projects"
   add_foreign_key "notifications", "users"
   add_foreign_key "previews", "users"
   add_foreign_key "projects", "organizations"
-  add_foreign_key "projects", "users"
+  add_foreign_key "projects", "users", column: "creator_id"
   add_foreign_key "roles", "organizations"
   add_foreign_key "roles", "users"
+  add_foreign_key "task_files", "tasks"
+  add_foreign_key "task_files", "users", column: "creator_id"
   add_foreign_key "tasks", "folders"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "users", column: "creator_id"

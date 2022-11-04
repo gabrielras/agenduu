@@ -9,7 +9,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.string :encrypted_password, null: false, default: ""
       t.string :phone_number
 
-      t.boolean :invitation, default: false
+      t.boolean :confirm_email, default: false
       t.boolean :blocked, default: false
       t.string :email_security_key
 

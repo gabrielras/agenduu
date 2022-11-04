@@ -10,27 +10,16 @@ module Provider
 
       def call
         ActiveRecord::Base.transaction do
-          if User.find_by_email(attributes[:email]).blank?
-            self.user = User.new(
-              full_name: attributes[:full_name], email: attributes[:email], password: SecureRandom.uuid
+          if Invitation.find_by_email(attributes[:email]).blank?
+            self.invitation = Invitation.new(
+              attributes.merge(role_type: role_type, key: SecureRandom.uuid, expires_at: expires_at)
             )
-            user.save!
-            Role.create!(
-              user: user, role_type: role_type(attributes[:role][:role_type]), organization: current_user.decorate.provider
-            )
+            invitation.save!
+
             mandatory_role
             invalid_organization
-
-            ::Common::Users::SendInvitation.result(user: user)
           else
-            self.user = User.find_by_email(attributes[:email])
-
-            Role.create!(
-              user: user,
-              role_type: role_type(attributes[:role][:role_type]),
-              organization: current_user.decorate.provider
-            )
-            ::Common::Users::SendInvitation.result(user: user) unless user.invitation
+            fail!(error: 'Convite já foi enviado')
           end
         end
       rescue StandardError => e
@@ -39,13 +28,13 @@ module Provider
 
       private
 
-      def role_type(role_type_attributes)
-        if current_user.decorate.role.role_type == 'owner' && ['admin', 'employee', 'customer'].include?(role_type_attributes)
-          role_type_attributes
-        elsif current_user.decorate.role.role_type == 'admin' && ['admin', 'employee', 'customer'].include?(role_type_attributes)
-          role_type_attributes
-        elsif current_user.decorate.role.role_type == 'employee' && ['customer'].include?(role_type_attributes)
-          role_type_attributes
+      def role_type
+        if current_user.decorate.role.role_type == 'owner' && ['admin', 'employee', 'customer'].include?(attributes[:role_type])
+          attributes[:role_type]
+        elsif current_user.decorate.role.role_type == 'admin' && ['admin', 'employee', 'customer'].include?(attributes[:role_type])
+          attributes[:role_type]
+        elsif current_user.decorate.role.role_type == 'employee' && ['customer'].include?(attributes[:role_type])
+          attributes[:role_type]
         else
           fail!(error: 'Função não permitida pelo cargo')
         end
@@ -56,7 +45,15 @@ module Provider
       end
 
       def invalid_organization
-        fail!(error: 'Organização diferente da sua') if current_user.decorate.provider == user.decorate.provider
+        fail!(error: 'Organização diferente da sua') if current_user.decorate.provider == invitation.organization
+      end
+
+      def expires_at
+        if attributes[:project].present?
+          Time.zone.now + 1.day
+        else
+          Time.zone.now + 3.days
+        end
       end
     end
   end

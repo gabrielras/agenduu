@@ -8,7 +8,7 @@ module Provider
 
       def call
         ActiveRecord::Base.transaction do
-          fail!(error: 'Não é possível recusar como proprietário') if role.owner?
+          fail!(error: 'Não é possível recusar um proprietário') if role.owner?
 
           role.destroy
         end

@@ -14,4 +14,16 @@ class User < ApplicationRecord
   has_many :previews
 
   validates :full_name, presence: true
+  validates :phone_number, presence: true
+
+  before_create :create_unique_key
+  
+  private
+
+  def create_unique_key
+    loop do
+      self.email_security_key = SecureRandom.hex(5)
+      break unless self.class.exists?(email_security_key: email_security_key)
+    end
+  end
 end

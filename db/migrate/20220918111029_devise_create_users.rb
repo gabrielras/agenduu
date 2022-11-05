@@ -8,10 +8,12 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
       t.string :phone_number
+      t.string :email_security_key
 
       t.boolean :confirm_email, null: false, default: false
-      t.datetime :expire_invitation
       t.boolean :blocked, default: false
+
+      t.datetime :expire_invitation
 
       ## Recoverable
       t.string   :reset_password_token

@@ -3,21 +3,24 @@
 class User::Common::AuthorizationsController < AbsentUserController
   layout 'common'
 
-  def confirmation
+  def index; end
+
+  def new
     @email_security_key = params[:id]
   end
 
-  def authorize
+  def create
     result = ::Common::Users::Authorization.result(
       email_security_key: params[:email_security_key]
     )
 
     if result.success?
-      redirect_to 
+      redirect_to user_common_invitations_path, notice: 'Autorizado com sucesso!'
     else
       flash[:alert] = result.error
+      @email_security_key = result.email_security_key
 
-      render :confirmation
+      render :new
     end
   end
 end

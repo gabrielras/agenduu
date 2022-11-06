@@ -111,7 +111,9 @@ ActiveRecord::Schema.define(version: 2022_11_02_165855) do
     t.bigint "organization_id", null: false
     t.bigint "project_id"
     t.string "key"
+    t.string "email"
     t.string "role_type"
+    t.string "state"
     t.datetime "expires_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -241,9 +243,10 @@ ActiveRecord::Schema.define(version: 2022_11_02_165855) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "phone_number"
-    t.boolean "invitation", default: false
-    t.boolean "blocked", default: false
     t.string "email_security_key"
+    t.boolean "confirm_email", default: false, null: false
+    t.boolean "blocked", default: false
+    t.datetime "expire_invitation"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

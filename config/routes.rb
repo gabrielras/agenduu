@@ -11,9 +11,6 @@ Rails.application.routes.draw do
 
   root 'user/provider/projects#index'
 
-  get '/invitations/confirmation/:id', to: 'invitations#confirmation', as: :confirmation
-  post '/invitations/authorize/:id', to: 'invitations#authorize', as: :authorize
-
   namespace :user do
     namespace :provider do
       namespace :manager do
@@ -32,6 +29,17 @@ Rails.application.routes.draw do
       resources :projects, except: [:show]
       resources :roles, except: [:show]
       resources :customers, only: [:index, :destroy]
+    end
+
+    namespace :customer do
+    end
+
+    namespace :common do
+      resources :invitations, only: [:index] do
+        post 'common/invitations/confirm/:id', to: 'invitations#confirm', as: :confirm
+        post 'common/invitations/rejected/:id', to: 'invitations#rejected', as: :rejected
+      end
+      resources :authorizations, only: [:index, :new, :create]
     end
   end
 end

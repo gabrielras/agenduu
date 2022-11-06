@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
-module Customers
+module Customer
   module Projects
-    module Messages
-      class Create < Actor
+    module Tasks
+      class Update < Actor
         input :attributes, type: Hash
-
-        output :message, type: Message
+        input :task, type: Task
 
         def call
           ActiveRecord::Base.transaction do
-            self.message = Message.new(attributes)
-            message.save!
+            self.task.update!(attributes)
           end
         rescue StandardError => e
           fail!(error: e.message)

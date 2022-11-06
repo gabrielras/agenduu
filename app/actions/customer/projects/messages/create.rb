@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Customers
+module Customer
   module Projects
     module Messages
       class Create < Actor

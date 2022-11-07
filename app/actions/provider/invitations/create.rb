@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
 module Provider
-  module Roles
+  module Invitations
     class Create < Actor
       input :attributes, type: Hash
       input :current_user, type: User
 
-      output :user, type: User
+      output :invitation, type: Invitation
 
       def call
         ActiveRecord::Base.transaction do
-          if Invitation.find_by_email(attributes[:email]).blank?
-            self.invitation = Invitation.new(
-              attributes.merge(role_type: role_type, key: SecureRandom.uuid, expires_at: expires_at)
-            )
+          if Invitation.where(email: attributes[:email], organization: current_user.decorate.provider).blank?
+            self.invitation = Invitation.new(attributes.merge(role_type: role_type, expires_at: expires_at, state: 'pending'))
             invitation.save!
 
             mandatory_role
             invalid_organization
+
+            Common::Invitations::Send.result(invitation: invitation)
           else
             fail!(error: 'Convite já foi enviado')
           end
@@ -49,11 +49,7 @@ module Provider
       end
 
       def expires_at
-        if attributes[:project].present?
-          Time.zone.now + 1.day
-        else
-          Time.zone.now + 3.days
-        end
+        Time.zone.now + 3.days
       end
     end
   end

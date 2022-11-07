@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-class User::Provider::InvitationsController < User::Provider::ProviderController
-  before_action :set_invitation, only: %i[destroy]
+class User::Provider::InvitationLinksController < User::Provider::ProviderController
+  before_action :set_invitation_link, only: %i[destroy]
 
   def index
-    @invitations = policy_scope(Invitation).where(organization: current_user.decorate.provider)
+    @invitation_links = policy_scope(InvitationLink).where(organization: current_user.decorate.provider)
   end
 
   def create
-    result = ::Provider::Invitations::Create.result(
+    result = ::Provider::InvitationLinks::Create.result(
       attributes: invitations_params
     )
 
@@ -20,8 +20,8 @@ class User::Provider::InvitationsController < User::Provider::ProviderController
   end
 
   def destroy
-    result = ::Provider::Invitations::Destroy.result(
-      invitation: @invitation
+    result = ::Provider::InvitationLinks::Destroy.result(
+      invitation_link: @invitation_link
     )
 
     if result.success?
@@ -33,12 +33,12 @@ class User::Provider::InvitationsController < User::Provider::ProviderController
 
   private
 
-  def invitation_params
-    params.require(:invitation).permit(:role_type, :email)
+  def invitation_link_params
+    params.require(:invitation_link).permit(:role_type)
       .merge(organization: current_user.decorate.provider).to_h
   end
 
-  def set_invitation
-    @invitation = policy_class(Invitation).find(params[:id])
+  def set_invitation_link
+    @invitation_link = policy_class(InvitationLink).find(params[:id])
   end
 end

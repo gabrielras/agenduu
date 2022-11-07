@@ -4,38 +4,32 @@ class User::Common::InvitationsController < AbsentUserController
   layout 'common'
 
   def index
-    @email_security_key = params[:id]
+    @invitations = Invitation.where(email: current_user.email)
   end
 
   def confirm
-    result = ::Common::Users::AuthorizeInvitation.result(
-      email_security_key: params[:email_security_key]
+    result = ::Common::Invitations::Confirm.result(
+      user: current_user,
+      invitation: Invitation.find(params[:id])
     )
 
     if result.success?
-      sign_in(:user, result.user)
-
-      redirect_to user_common_dashboards_path, notice: 'Senha atualizada com sucesso.'
+      redirect_to user_common_invitations_path, notice: 'Confirmado'
     else
-      flash[:alert] = result.error
-
-      render :confirmation
+      redirect_to user_common_invitations_path, alert: result.error
     end
   end
 
   def reject
-    result = ::Common::Users::AuthorizeInvitation.result(
-      email_security_key: params[:email_security_key]
+    result = ::Common::Invitations::Rejected.result(
+      user: current_user,
+      invitation: Invitation.find(params[:id])
     )
 
     if result.success?
-      sign_in(:user, result.user)
-
-      redirect_to user_common_dashboards_path, notice: 'Senha atualizada com sucesso.'
+      redirect_to user_common_invitations_path, notice: 'Rejeitado'
     else
-      flash[:alert] = result.error
-
-      render :confirmation
+      redirect_to user_common_invitations_path, alert: result.error
     end
   end
 end

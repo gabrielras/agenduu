@@ -7,6 +7,7 @@ module Common
       input :invitation, type: Invitation
 
       def call
+        return if invitation.rejected?
         fail!(error: 'Não é possível realizar essa ação') if user.email != invitation.email
 
         invitation.update!(state: 'rejected')

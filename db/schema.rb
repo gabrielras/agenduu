@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_02_165855) do
+ActiveRecord::Schema.define(version: 2022_11_06_125222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,7 +110,6 @@ ActiveRecord::Schema.define(version: 2022_11_02_165855) do
   create_table "invitations", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.bigint "project_id"
-    t.string "key"
     t.string "email"
     t.string "role_type"
     t.string "state"
@@ -119,6 +118,18 @@ ActiveRecord::Schema.define(version: 2022_11_02_165855) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["organization_id"], name: "index_invitations_on_organization_id"
     t.index ["project_id"], name: "index_invitations_on_project_id"
+  end
+
+  create_table "invite_links", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "project_id"
+    t.string "key"
+    t.string "role_type"
+    t.datetime "expires_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_invite_links_on_organization_id"
+    t.index ["project_id"], name: "index_invite_links_on_project_id"
   end
 
   create_table "mentions", force: :cascade do |t|
@@ -268,6 +279,8 @@ ActiveRecord::Schema.define(version: 2022_11_02_165855) do
   add_foreign_key "folders", "users", column: "creator_id"
   add_foreign_key "invitations", "organizations"
   add_foreign_key "invitations", "projects"
+  add_foreign_key "invite_links", "organizations"
+  add_foreign_key "invite_links", "projects"
   add_foreign_key "mentions", "users"
   add_foreign_key "messages", "tasks"
   add_foreign_key "messages", "users", column: "creator_id"

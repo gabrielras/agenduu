@@ -32,6 +32,12 @@ Rails.application.routes.draw do
     end
 
     namespace :customer do
+      resources :projects, only: [:show] do
+        resources :folders
+        resources :tasks do
+          resources :messages
+        end
+      end
     end
 
     namespace :common do

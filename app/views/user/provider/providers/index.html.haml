@@ -11,19 +11,19 @@
       .card-body
         .row.gy-3
           .col-lg-4.col-md-6
-            = link_to 'Cadastrar', new_user_provider_role_path, class: 'btn btn-dark', "data-turbolinks": "false"
+            = link_to 'Convites', user_provider_invitations_path, class: 'btn btn-dark', "data-turbolinks": "false"
             = link_to 'Clientes', user_provider_customers_path, class: 'btn btn-warning', "data-turbolinks": "false"
 
       %h5.card-header Listagem de Funcionários
       .card-body
         %div.mb-4
-          = search_form_for @q, url: user_provider_roles_path do |f|
+          = search_form_for @q, url: user_provider_providers_path do |f|
             = f.search_field :full_name_or_email_cont, class: 'form-control', placeholder: "Pesquisar por nome ou email"
         .table-responsive.text-nowrap
           %table.table.table-dark
             %thead
               %tr
-                %th Nome
+                %th email
                 %th Cargo
             %tbody.table-border-bottom-0
               - @users.each do |user|

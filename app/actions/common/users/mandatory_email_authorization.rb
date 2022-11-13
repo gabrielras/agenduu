@@ -6,7 +6,7 @@ module Common
       input :user, type: User
 
       def call
-        fail!(error: 'é preciso confirmar seu email') if self.user.confirm_email == false && Invitation.where(state: 'pending', user: self.user).present?
+        fail!(error: 'é preciso confirmar seu email') if self.user.confirm_email == false && Invitation.where(state: 'pending', email: self.user.email).present?
       end
     end
   end

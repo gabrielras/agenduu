@@ -1,0 +1,46 @@
+= flash_message
+
+.content-wrapper
+  / Content
+  .container-xxl.flex-grow-1.container-p-y
+    %h4.fw-bold.py-3.mb-4
+      Usuários
+      %span.text-muted.fw-light / Organização
+    .card.mb-4
+      %hr.m-0/
+      .card-body
+        .row.gy-3
+          .col-lg-4.col-md-6
+            = link_to 'Convidados', user_provider_invitations_path, class: 'btn btn-warning', "data-turbolinks": "false"
+            = link_to 'Voltar', user_provider_providers_path, class: 'btn btn-primary', "data-turbolinks": "false"
+    
+
+    .col-8.mb-4.order-0.mx-auto
+      .card
+        .d-flex.align-items-end.row
+          .col-sm-7
+            .card-body
+              %h3.card-title.text-primary Convide seus funcionários 🎉
+              %p.mb-4
+                Envie o link de convite.
+              .row.gy-3
+                .col-lg-4.col-md-6
+                  = button_to 'Gerar Link para Administradores', user_provider_invite_links_path, class: 'btn btn-info', "data-turbolinks": "false", method: :post, params: {'invite_link[role_type]' => 'admin'}
+                  = button_to 'Gerar Link para Funcionários', user_provider_invite_links_path, class: 'btn btn-success', "data-turbolinks": "false", method: :post, params: {'invite_link[role_type]' => 'employee'}
+          .col-sm-5.text-center.text-sm-left
+            .card-body.pb-0.px-0.px-md-4
+              = image_tag 'Documents-cuate.svg', alt: '', height: '140'
+    .card.mb-4
+      %h5.card-header Listagem de Links de Convites
+      .card-body
+        .table-responsive.text-nowrap
+          %table.table.table-dark
+            %thead
+              %tr
+                %th cargo
+                %th situação
+            %tbody.table-border-bottom-0
+              - @invite_links.each do |invite_link|
+                %tr
+                  %td= invite_link.role_type
+                  %td= invite_link.expires_at

@@ -4,9 +4,15 @@ class User::Provider::InvitationsController < User::Provider::ProviderController
   before_action :set_invitation, only: %i[destroy]
 
   def index
-    @invitations = policy_scope(Invitation).where(organization: current_user.decorate.provider)
+    @q = policy_scope(Invitation).where(organization: current_user.decorate.provider, project: nil).where.not(role_type: 'customer').ransack(params[:q])
+    result = @q.result(distinct: true).order(created_at: :desc)
+    @pagy, @invitations = pagy(result, items: 10)
   end
-
+  
+  def new
+    @invitation = Invitation.new
+  end
+  
   def create
     result = ::Provider::Invitations::Create.result(
       attributes: invitations_params

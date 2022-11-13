@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Provider
-  module InvitationLinks
+  module InviteLinks
     class Destroy < Actor
-      output :invitation_link, type: InvitationLink
+      output :invite_link, type: InviteLink
 
       def call
-        self.invitation_link.destroy
+        self.invite_link.destroy
       rescue StandardError => e
         fail!(error: e.message)
       end

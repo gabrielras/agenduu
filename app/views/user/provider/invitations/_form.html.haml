@@ -1,0 +1,29 @@
+= flash_message
+
+= form_with model: @invitation,
+            url: user_provider_invitations_path,
+            method: :post,
+            html: { class: 'require-validation' }, validate: true do |f|
+  - if @message_error.present?
+    %div{style: "color: red"}
+      %ul
+        %li= @message_error
+
+  .mb-3
+    = f.label :email, class: 'col-sm-6 col-form-label'
+    = f.email_field :email,
+                autofocus: true,
+                class: 'form-control'
+    .letter-counter.mt-2.d-flex.justify-content-end
+
+  .mb-3
+    .card-body
+      = form.label :role_type, class: 'form-label'
+      %br
+      - (RoleEnum::RoleTypes.list - ['owner', 'customer']).collect.each do |value|
+        .form-check.form-check-inline.mt-3
+          = form.radio_button :role_type, value, id: "#{value}", class: 'form-check-input'
+          = form.label :role_type, I18n.t("enumerations.role_enum.role_types.#{value}"), for: value, class: 'form-check-label'
+  .row
+    .d-grid.gap-2.col-3.mx-auto.mb-3
+      = f.submit t('.confirm', default: t("helpers.submit.save")), class: 'btn btn-secondary rounded-pill'

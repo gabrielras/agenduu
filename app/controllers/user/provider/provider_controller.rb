@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User::Provider::ProviderController < UserController
-  before_action :validate_organization
+  before_action :validate_organization, :set_organization
 
   def policy_scope(scope)
     super([:user, :provider, scope])
@@ -9,6 +9,10 @@ class User::Provider::ProviderController < UserController
 
   def authorize(record, query = nil)
     super([:user, :provider, record], query)
+  end
+
+  def set_organization
+    @organization = policy_scope(Organization).find_by!(slug: request.subdomain)
   end
 
   private

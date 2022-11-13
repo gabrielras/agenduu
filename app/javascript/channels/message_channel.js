@@ -2,7 +2,7 @@ import consumer from "./consumer"
 
 $(document).ready(function() {
   if ($('#message_channel').length > 0) {
-    let preview_pane_id = $('#message_channel').attr('data-preview-pane-id');
+    let message_id = $('#message_channel').attr('data-message-id');
 
     consumer.subscriptions.create({
       channel: `MessageClientChannel`,

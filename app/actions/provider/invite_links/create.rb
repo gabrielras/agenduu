@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
 module Provider
-  module InvitationLinks
+  module InviteLinks
     class Create < Actor
       input :attributes, type: Hash
 
-      output :invitation_link, type: InvitationLink
+      output :invite_link, type: InviteLink
 
       def call
         ActiveRecord::Base.transaction do
-          self.invitation_link = InvitationLink.new(attributes)
+          self.invite_link = InviteLink.new(attributes)
 
-          existing_link = InvitationLink.where(organization: attributes[:organization], role_type: attributes[:role_type]).take
+          existing_link = InviteLink.where(organization: attributes[:organization], role_type: attributes[:role_type]).take
           existing_link.destroy if existing_link.present?
 
-          invitation_link.save!
+          invite_link.save!
         end
       rescue StandardError => e
         fail!(error: e.message)

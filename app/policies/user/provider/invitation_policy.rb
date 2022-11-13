@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-class User::Provider::ProjectPolicy < ApplicationPolicy
+class User::Provider::InvitationPolicy < ApplicationPolicy
   def index?
-    true
+    user.role.owner? || user.role.admin?
   end
 
   def create?
-    true
+    index?
   end
 
   def new?
-    true
+    index?
   end
 
   def edit?
-    user.role.owner? || user.role.admin? || record.creator == user
+    index?
   end
 
   def update?
-    edit?
+    index?
   end
 
   class Scope

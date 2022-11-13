@@ -2,12 +2,12 @@
 
 module Provider
   module Manager
-    module InvitationLinks
+    module InviteLinks
       class Destroy < Actor
-        output :invitation_link, type: InvitationLink
+        output :invite_link, type: InviteLink
 
         def call
-          invitation_link.destroy
+          invite_link.destroy
         rescue StandardError => e
           fail!(error: e.message)
         end

@@ -11,6 +11,7 @@ class Invitation < ApplicationRecord
   validates :state, presence: true
 
   validate :same_organization, if: [:organization_id, :project_id]
+  validate :unique_email, if: [:email, :organization_id]
 
   private
 
@@ -18,5 +19,11 @@ class Invitation < ApplicationRecord
     return if organization.id == project.organization.id
 
     errors.add(:project, I18n.t('models.concerns.errors.type_is_invalid'))
+  end
+
+  def unique_email
+    return if Invitation.where(email: email, project: project, organization: organization).blank?
+
+    errors.add(:email, 'deve ser único')
   end
 end

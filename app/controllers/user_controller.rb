@@ -12,9 +12,9 @@ class UserController < ApplicationController
   end
 
   def confirm_invitation_by_link
-    invitation_link = InvitationLink.find_by_key(session[:invitation_key])
-    if invitation_link.present? && invitation_link.expires_at <= Time.zone.now
-      Common::InvitationLinks::Confirm.result(user: current_user, invitation_link: invitation_link)
+    invite_link = ::InviteLink.find_by_key(session[:invitation_key])
+    if invite_link.present? && invite_link.expires_at <= Time.zone.now
+      Common::InviteLinks::Confirm.result(user: current_user, invite_link: invite_link)
     end
   end
 end

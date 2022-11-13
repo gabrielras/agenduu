@@ -2,7 +2,7 @@
 
 module Provider
   module Roles
-    class Remove < Actor
+    class Destroy < Actor
       input :current_user, type: User
       input :user, type: User
 

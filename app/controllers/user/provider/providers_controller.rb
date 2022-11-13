@@ -1,32 +1,12 @@
 # frozen_string_literal: true
 
-class User::Provider::RolesController < User::Provider::ProviderController
+class User::Provider::ProvidersController < User::Provider::ProviderController
   before_action :set_user, only: %i[edit update destroy]
 
   def index
     @q = policy_scope(User).joins(:roles).where.not(roles: { role_type: 'customer'}).ransack(params[:q])
     result = @q.result(distinct: true).order(created_at: :desc)
     @pagy, @users = pagy(result, items: 10)
-  end
-
-  def new
-    @user = User.new
-    @role = Role.new
-  end
-
-  def create
-    result = ::Provider::Roles::Create.result(
-      attributes: user_params
-    )
-
-    if result.success?
-      redirect_to user_provider_roles_path(result.user), notice: 'criado'
-    else
-      flash[:alert] = result.error
-      @user = result.user
-
-      render :new
-    end
   end
 
   def update
@@ -63,7 +43,7 @@ class User::Provider::RolesController < User::Provider::ProviderController
 
   def user_params
     params.require(:user).permit(
-      :full_name, :email, role: [:role_type]
+      role: [:role_type]
     ).to_h
   end
 

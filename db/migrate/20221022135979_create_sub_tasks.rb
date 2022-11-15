@@ -3,6 +3,7 @@ class CreateTaskFiles < ActiveRecord::Migration[6.1]
     create_table :task_files do |t|
       t.references :task, null: false, foreign_key: true
       t.references :creator, null: false, foreign_key: { to_table: :users }
+      t.datetime :initial_date
 
       t.timestamps
     end

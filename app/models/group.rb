@@ -8,7 +8,8 @@ class Group < ApplicationRecord
   has_many :accessibilities, dependent: :destroy
   has_many :users, :through => :accessibilities
   has_many :tasks, dependent: :destroy
-  has_many :invites, dependent: :destroy
+
+  has_one :invite, dependent: :destroy
 
   validates :title, uniqueness: { scope: :organization_id }
   validates :title, presence: true

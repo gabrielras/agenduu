@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :role
-  has_one :organization, through: :roles
+  has_one :organization, through: :role
 
   has_many :accessibilities
   has_many :mentions

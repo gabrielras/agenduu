@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module RoleEnum
+module InvitationEnum
   class RoleTypes < EnumerateIt::Base
-    associate_values(:owner, :admin, :employee)
+    associate_values(:client, :admin, :employee)
   end
 end

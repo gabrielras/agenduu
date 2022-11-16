@@ -1,6 +1,6 @@
 class Invite < ApplicationRecord
   belongs_to :organization
-  belongs_to :group
+  belongs_to :group, optional: true
 
   validates :expires_at, presence: true
   validates :key, presence: true

@@ -7,13 +7,13 @@ class Role < ApplicationRecord
   validates :role_type, presence: true
   validates :user, uniqueness: { scope: :organization_id }
 
-  validate :single_provider, if: [:organization_id, :user_id]
+  validate :single_organization, if: [:organization_id, :user_id]
 
   private
 
-  def single_provider
-    if user.decorate.provider.present? && ['owner', 'admin', 'employee'].include?(role_type)
-      errors.add(:organization_id, 'Você já tem um cargo em uma organização')
-    end
+  def single_organization
+    return if user.role.blank?
+
+    errors.add(:organization_id, 'Você já tem um cargo')
   end
 end

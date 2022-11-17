@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-module Provider
+module Users
   module Manager
-    module Accessibilities
-      class Update < Actor
-        input :attributes, type: Hash
-        input :accessibility, type: Accessibility
+    module ClientAccessibilities
+      class Destroy < Actor
+        input :accessibility, type: ClientAccessibility
 
         def call
           ActiveRecord::Base.transaction do
-            self.accessibility.update!(attributes)
+            accessibility.destroy
           end
         rescue StandardError => e
           fail!(error: e.message)

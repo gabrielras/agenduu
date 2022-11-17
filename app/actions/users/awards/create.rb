@@ -8,6 +8,8 @@ module Users
 
       def call
         ActiveRecord::Base.transaction do
+          fail!(error: 'Já existe um prêmio cadastrado') if Award.where(organization: attributes[:organization]).present?
+
           self.award = Award.new(attributes)
           award.save!
         end

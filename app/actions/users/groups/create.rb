@@ -13,7 +13,7 @@ module Users
           self.group = Group.new(attributes.merge(creator: current_user))
           group.save!
   
-          Manager::Accessibilities::Employees::Create.result(
+          Manager::UserAccessibilities::Create.result(
             attributes: { group: group, user: current_user, allow: 'manager' }
           )
         end

@@ -1,4 +1,4 @@
-class Accessibility < ApplicationRecord
+class UserAccessibility < ApplicationRecord
   belongs_to :group
   belongs_to :user
 

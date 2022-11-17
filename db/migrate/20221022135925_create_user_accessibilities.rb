@@ -1,6 +1,6 @@
-class CreateAccessibilities < ActiveRecord::Migration[6.1]
+class CreateUserAccessibilities < ActiveRecord::Migration[6.1]
   def change
-    create_table :accessibilities do |t|
+    create_table :user_accessibilities do |t|
       t.references :group, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
 

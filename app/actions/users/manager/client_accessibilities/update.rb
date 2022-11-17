@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Provider
+module Users
   module Manager
-    module Accessibilities
+    module ClientAccessibilities
       class Update < Actor
         input :attributes, type: Hash
-        input :accessibility, type: Accessibility
+        input :accessibility, type: ClientAccessibility
 
         def call
           ActiveRecord::Base.transaction do

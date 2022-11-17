@@ -12,20 +12,9 @@ module Users
           ActiveRecord::Base.transaction do
             self.task = Task.new(attributes.except(:files))
             task.save!
-
-            upload_files
           end
         rescue StandardError => e
           fail!(error: e.message)
-        end
-
-        private
-
-        def upload_files
-          return if attributes[:files].blank?
-          
-
-          task.files.attach(attributes[:files])
         end
       end
     end

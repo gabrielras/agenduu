@@ -8,7 +8,11 @@ module User
 
         def call
           ActiveRecord::Base.transaction do
-            
+            AskForTestimony.create!(
+              organization: organization,
+              title: 'você gostaria de dar um depoimento?',
+              description: 'Nós adoraríamos ouvir de você :)'
+            )
           end
         rescue StandardError => e
           fail!(error: e.message)

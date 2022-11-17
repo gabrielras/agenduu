@@ -14,10 +14,10 @@ module User
             self.organization = Organization.new(attributes)
             organization.save!
 
-            if Role.where(organization: organization, user: owner, role_type: 'owner').present?
-              fail!(error: 'Seu e-mail já tem cadastro como proprietário em uma empresa.')
+            if Role.where(organization: organization, user: owner).present?
+              fail!(error: 'Seu e-mail já tem cadastro como uma empresa.')
             end
-            Role.create!(role_type: 'owner', user: owner, organization: provider)
+            Role.create!(role_type: 'owner', user: owner, organization: organization)
           end
         rescue StandardError => e
           fail!(error: e.message)

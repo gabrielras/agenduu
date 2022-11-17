@@ -13,8 +13,8 @@ module Users
           ActiveRecord::Base.transaction do
             self.invite = Invite.new(attributes)
 
-            existing_link = Invite.where(group: attributes[:group], role_type: attributes[:role_type]).take
-            existing_link.destroy if existing_link.present?
+            existing_invite = Invite.where(group: attributes[:group], role_type: attributes[:role_type]).take
+            existing_invite.destroy if existing_invite.present?
 
             invite.save!
           end

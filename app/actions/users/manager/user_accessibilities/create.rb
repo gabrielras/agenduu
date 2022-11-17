@@ -1,21 +1,17 @@
 # frozen_string_literal: true
 
-module Provider
+module Users
   module Manager
-    module Accessibilities
+    module UserAccessibilities
       class Create < Actor
         input :attributes, type: Hash
 
-        output :accessibility, type: Accessibility
+        output :accessibility, type: UserAccessibility
 
         def call
           ActiveRecord::Base.transaction do
-            self.accessibility = Accessibility.new(attributes)
+            self.accessibility = UserAccessibility.new(attributes)
             accessibility.save!
-
-            ::Provider::Manager::AccessibilityNotifications::Create.result(
-              attributes: { accessibility: accessibility }
-            )
           end
         rescue StandardError => e
           fail!(error: e.message)

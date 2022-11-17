@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Provider
+module Users
   module Manager
-    module Accessibilities
+    module UserAccessibilities
       class Destroy < Actor
-        input :accessibility, type: Accessibility
+        input :accessibility, type: UserAccessibility
 
         def call
           ActiveRecord::Base.transaction do

@@ -2,8 +2,11 @@ class Invite < ApplicationRecord
   belongs_to :organization
   belongs_to :group, optional: true
 
+  has_enumeration_for :role_type, with:InviteEnum::RoleTypes, create_helpers: true
+
   validates :expires_at, presence: true
   validates :key, presence: true
+  validates :role_type, presence: true
 
   validate :same_organization, if: [:organization_id, :group_id]
 

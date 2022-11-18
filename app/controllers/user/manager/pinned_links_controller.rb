@@ -32,7 +32,7 @@ class User::Manager::PinnedLinksController < User::Manager::ManagerController
   end
 
   def update
-    result = ::Provider::Manager::PinnedLinks::Update.result(
+    result = Users::Manager::PinnedLinks::Update.result(
       pinned_link: @pinned_link,
       attributes: pinned_link_params
     )
@@ -45,9 +45,6 @@ class User::Manager::PinnedLinksController < User::Manager::ManagerController
 
       render :edit, status: :unprocessable_entity 
     end
-  end
-
-  def move_to
   end
 
   private

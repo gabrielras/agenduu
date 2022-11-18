@@ -11,7 +11,6 @@ class Task < ApplicationRecord
   accepts_nested_attributes_for :sub_tasks, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :mentions, reject_if: :all_blank, allow_destroy: true
   
-  validates :type_task, presence: true
   validates :title, presence: true
   validates :send_email, inclusion: { in: [ true, false ] }
 end

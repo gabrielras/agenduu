@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-class User::Manager::ClientsController < User::Manager::ManagerController
-  before_action :set_project
+class User::Manager::ClientAccessibilitiesController < User::Manager::ManagerController
+  before_action :set_group
   before_action :set_accessibility, except: [:index, :create, :new]
 
   def index
-    @q = policy_scope(Accessibility).where(project: @project).joins(:roles).where(roles: { role_type: 'customer' }).ransack(params[:q])
-    result = @q.result(distinct: true).includes(:project, :user).order(description: :asc)
+    @q = policy_scope(ClientAccessibility).where(group: @group).ransack(params[:q])
+    result = @q.result(distinct: true).includes(:group, :client).order(description: :asc)
     @pagy, @accessibilities = pagy(result, items: 10)
   end
 
   def destroy
-    result = ::Users::Manager::Accessibility::Destroy.result(
-      folder: @accessibility
+    result = ::Users::Manager::ClientAccessibilities::Destroy.result(
+      accessibility: @accessibility
     )
 
     if result.success?
-      
+      redirect_to user_manager_client_accessibilities_path(@group), notice: 'removido'
     else
-      
+      redirect_to user_manager_client_accessibilities_path(@group), alert: result.error
     end
   end
 

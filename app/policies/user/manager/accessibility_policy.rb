@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User::Provider::Manager::AccessibilityPolicy < ApplicationPolicy
+class Users::Manager::AccessibilityPolicy < ApplicationPolicy
   def index?
     true
   end

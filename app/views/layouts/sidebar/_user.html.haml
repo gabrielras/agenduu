@@ -43,7 +43,7 @@
           %i.menu-icon.tf-icons.bx.bx-user-circle
           Indicações dos Clientes
       %li.menu-item
-        = link_to edit_user_ask_for_testimony_path(@organization.ask_for_testimony), class: 'menu-link' do
+        = link_to edit_user_ask_for_testimony_path(@organization.ask_for_testimony.try(:id)), class: 'menu-link' do
           %i.menu-icon.tf-icons.bx.bx-user-circle
           Avalições dos Clientes
       %li.menu-item

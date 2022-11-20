@@ -4,7 +4,7 @@ module Users
   module Organizations
     module Create
       class Received < Actor
-        play Default, AskForTestimony, Invites, RatingQuestions
+        play Default, AskForTestimonies, Invites, RatingQuestions
       end
     end
   end

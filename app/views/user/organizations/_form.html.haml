@@ -1,5 +1,5 @@
-
 = flash_message
+
 = form_with model: @organization,
             url: (@organization.new_record? ? user_organizations_path : user_organization_path),
             html: { class: 'require-validation' }, validate: true do |f|

@@ -3,7 +3,7 @@ class Organization < ApplicationRecord
   friendly_id :title, use: :slugged
 
   has_one :ask_for_testimony, dependent: :destroy
-  has_many :testimonies, through: :ask_for_testimonies
+  has_many :testimonies, dependent: :destroy
 
   has_one :award, dependent: :destroy
   has_many :rewards, through: :award
@@ -19,7 +19,6 @@ class Organization < ApplicationRecord
 
   validates :title, presence: true
   validates :phone_number, presence: true
-  validates :primary_color, presence: true
 
   validates :email, format: { with: /\A[^@\s]+@[^@\s]+\z/ }, presence: true
 end

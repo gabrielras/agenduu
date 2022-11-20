@@ -16,12 +16,12 @@ class User::OrganizationsController < UserController
       owner: current_user,
       attributes: organization_params
     )
-
+    byebug
     if result.success?
-      redirect_to user_provider_projects_path, notice: 'Sua organização foi cadastrada'
+      redirect_to user_groups_path(subdomain: result.organization.slug), notice: 'Sua organização foi cadastrada'
     else
       flash[:alert] = result.error
-      @organization = result.provider
+      @organization = result.organization
 
       render :new
     end

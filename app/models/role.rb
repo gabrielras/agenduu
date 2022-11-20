@@ -12,8 +12,8 @@ class Role < ApplicationRecord
   private
 
   def single_organization
-    return if user.role.blank?
+    return if user.role.new_record? || user.role.blank?
 
-    errors.add(:organization_id, 'Você já tem um cargo')
+    errors.add(:organization_id, 'você já tem um cargo')
   end
 end

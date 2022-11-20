@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module User
+module Users
   module Organizations
     module Create
       class Default < Actor

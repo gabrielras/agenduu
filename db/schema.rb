@@ -10,39 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_06_125222) do
+ActiveRecord::Schema.define(version: 2022_11_19_172335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "accessibilities", force: :cascade do |t|
-    t.bigint "project_id", null: false
-    t.bigint "user_id", null: false
-    t.string "allows"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["project_id"], name: "index_accessibilities_on_project_id"
-    t.index ["user_id"], name: "index_accessibilities_on_user_id"
-  end
-
-  create_table "accessibility_folders", force: :cascade do |t|
-    t.bigint "folder_id", null: false
-    t.bigint "user_id", null: false
-    t.string "allows"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["folder_id"], name: "index_accessibility_folders_on_folder_id"
-    t.index ["user_id"], name: "index_accessibility_folders_on_user_id"
-  end
-
-  create_table "accessibility_notifications", force: :cascade do |t|
-    t.bigint "accessibility_id", null: false
-    t.boolean "receive_email_when_tagged", default: false, null: false
-    t.boolean "receive_email_when_responds", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["accessibility_id"], name: "index_accessibility_notifications_on_accessibility_id"
-  end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -82,18 +53,59 @@ ActiveRecord::Schema.define(version: 2022_11_06_125222) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "folders", force: :cascade do |t|
-    t.bigint "project_id", null: false
-    t.bigint "creator_id"
-    t.string "title"
+  create_table "affiliates", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "client_id"
+    t.string "key"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "foldable_id"
-    t.string "slug"
-    t.index ["creator_id"], name: "index_folders_on_creator_id"
-    t.index ["foldable_id"], name: "index_folders_on_foldable_id"
-    t.index ["project_id"], name: "index_folders_on_project_id"
-    t.index ["slug"], name: "index_folders_on_slug", unique: true
+    t.index ["client_id"], name: "index_affiliates_on_client_id"
+    t.index ["organization_id"], name: "index_affiliates_on_organization_id"
+  end
+
+  create_table "ask_for_testimonies", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_ask_for_testimonies_on_organization_id"
+  end
+
+  create_table "awards", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.text "current_client"
+    t.text "new_client"
+    t.text "rule"
+    t.string "business_cell_phone"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_awards_on_organization_id"
+  end
+
+  create_table "client_accessibilities", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "client_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_client_accessibilities_on_client_id"
+    t.index ["group_id"], name: "index_client_accessibilities_on_group_id"
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "phone_number"
+    t.string "full_name"
+    t.bigint "organization_id", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email", "organization_id"], name: "index_clients_on_email_and_organization_id", unique: true
+    t.index ["organization_id"], name: "index_clients_on_organization_id"
+    t.index ["reset_password_token"], name: "index_clients_on_reset_password_token", unique: true
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -107,60 +119,59 @@ ActiveRecord::Schema.define(version: 2022_11_06_125222) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
-  create_table "invitations", force: :cascade do |t|
+  create_table "groups", force: :cascade do |t|
     t.bigint "organization_id", null: false
-    t.bigint "project_id"
-    t.string "email"
-    t.string "role_type"
-    t.string "state"
-    t.datetime "expires_at"
+    t.bigint "creator_id", null: false
+    t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_invitations_on_organization_id"
-    t.index ["project_id"], name: "index_invitations_on_project_id"
+    t.index ["creator_id"], name: "index_groups_on_creator_id"
+    t.index ["organization_id"], name: "index_groups_on_organization_id"
   end
 
-  create_table "invite_links", force: :cascade do |t|
+  create_table "invites", force: :cascade do |t|
     t.bigint "organization_id", null: false
-    t.bigint "project_id"
+    t.bigint "group_id"
     t.string "key"
     t.string "role_type"
     t.datetime "expires_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_invite_links_on_organization_id"
-    t.index ["project_id"], name: "index_invite_links_on_project_id"
+    t.index ["group_id"], name: "index_invites_on_group_id"
+    t.index ["organization_id"], name: "index_invites_on_organization_id"
+  end
+
+  create_table "leads", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.string "origin_type", null: false
+    t.bigint "origin_id", null: false
+    t.string "full_name"
+    t.string "email"
+    t.string "phone_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_leads_on_organization_id"
+    t.index ["origin_type", "origin_id"], name: "index_leads_on_origin"
   end
 
   create_table "mentions", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "viewer_type"
-    t.bigint "viewer_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_mentions_on_user_id"
-    t.index ["viewer_type", "viewer_id"], name: "index_mentions_on_viewer"
-  end
-
-  create_table "messages", force: :cascade do |t|
     t.bigint "task_id", null: false
-    t.bigint "creator_id"
-    t.boolean "send_email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["creator_id"], name: "index_messages_on_creator_id"
-    t.index ["task_id"], name: "index_messages_on_task_id"
+    t.index ["task_id"], name: "index_mentions_on_task_id"
+    t.index ["user_id"], name: "index_mentions_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.bigint "group_id"
     t.string "description"
     t.string "link"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "project_id"
     t.boolean "visualized", default: false
-    t.index ["project_id"], name: "index_notifications_on_project_id"
+    t.index ["group_id"], name: "index_notifications_on_group_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -169,32 +180,64 @@ ActiveRecord::Schema.define(version: 2022_11_06_125222) do
     t.string "state"
     t.string "email"
     t.string "phone_number"
+    t.string "primary_color"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 
-  create_table "previews", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "viewer_type"
-    t.bigint "viewer_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_previews_on_user_id"
-    t.index ["viewer_type", "viewer_id"], name: "index_previews_on_viewer"
-  end
-
-  create_table "projects", force: :cascade do |t|
-    t.bigint "organization_id", null: false
+  create_table "pinned_links", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.string "link"
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "slug"
-    t.bigint "creator_id"
-    t.index ["creator_id"], name: "index_projects_on_creator_id"
-    t.index ["organization_id"], name: "index_projects_on_organization_id"
-    t.index ["slug"], name: "index_projects_on_slug", unique: true
+    t.index ["group_id"], name: "index_pinned_links_on_group_id"
+  end
+
+  create_table "print_awards", force: :cascade do |t|
+    t.string "current_client"
+    t.string "new_client"
+    t.string "rule"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "rating_answers", force: :cascade do |t|
+    t.bigint "rating_question_id", null: false
+    t.bigint "task_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["rating_question_id"], name: "index_rating_answers_on_rating_question_id"
+    t.index ["task_id"], name: "index_rating_answers_on_task_id"
+  end
+
+  create_table "rating_questions", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.integer "value"
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_rating_questions_on_organization_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.string "description"
+    t.integer "stars"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["task_id"], name: "index_ratings_on_task_id"
+  end
+
+  create_table "rewards", force: :cascade do |t|
+    t.bigint "affiliate_id", null: false
+    t.bigint "print_award_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["affiliate_id"], name: "index_rewards_on_affiliate_id"
+    t.index ["print_award_id"], name: "index_rewards_on_print_award_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -207,46 +250,54 @@ ActiveRecord::Schema.define(version: 2022_11_06_125222) do
     t.index ["user_id"], name: "index_roles_on_user_id"
   end
 
-  create_table "schedules", force: :cascade do |t|
-    t.string "taskable_type"
-    t.bigint "taskable_id"
-    t.datetime "execution_date"
-    t.integer "days_to_make_mandatory"
-    t.boolean "repeat", default: false, null: false
-    t.integer "interval_repeat", null: false
-    t.integer "day_of_repeat", null: false
-    t.integer "minute_of_repeat", null: false
-    t.integer "hour_of_repeat", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["taskable_type", "taskable_id"], name: "index_schedules_on_taskable"
-  end
-
-  create_table "task_files", force: :cascade do |t|
+  create_table "sub_tasks", force: :cascade do |t|
     t.bigint "task_id", null: false
     t.bigint "creator_id", null: false
+    t.datetime "initial_date"
+    t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["creator_id"], name: "index_task_files_on_creator_id"
-    t.index ["task_id"], name: "index_task_files_on_task_id"
+    t.index ["creator_id"], name: "index_sub_tasks_on_creator_id"
+    t.index ["task_id"], name: "index_sub_tasks_on_task_id"
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.bigint "folder_id"
     t.bigint "creator_id"
+    t.bigint "group_id"
     t.string "title"
-    t.string "link"
-    t.string "type_task"
-    t.boolean "send_email"
+    t.string "activity_link"
+    t.datetime "initial_date"
+    t.datetime "final_date"
+    t.integer "interval_to_update"
+    t.boolean "notified_by_email"
+    t.boolean "closed"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
-    t.bigint "project_id"
-    t.boolean "allow_clients_task", default: true
     t.index ["creator_id"], name: "index_tasks_on_creator_id"
-    t.index ["folder_id"], name: "index_tasks_on_folder_id"
-    t.index ["project_id"], name: "index_tasks_on_project_id"
+    t.index ["group_id"], name: "index_tasks_on_group_id"
     t.index ["slug"], name: "index_tasks_on_slug", unique: true
+  end
+
+  create_table "testimonies", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "client_id"
+    t.bigint "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_testimonies_on_client_id"
+    t.index ["group_id"], name: "index_testimonies_on_group_id"
+    t.index ["organization_id"], name: "index_testimonies_on_organization_id"
+  end
+
+  create_table "user_accessibilities", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "user_id", null: false
+    t.string "allow"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_user_accessibilities_on_group_id"
+    t.index ["user_id"], name: "index_user_accessibilities_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -267,33 +318,40 @@ ActiveRecord::Schema.define(version: 2022_11_06_125222) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "accessibilities", "projects"
-  add_foreign_key "accessibilities", "users"
-  add_foreign_key "accessibility_folders", "folders"
-  add_foreign_key "accessibility_folders", "users"
-  add_foreign_key "accessibility_notifications", "accessibilities"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "folders", "folders", column: "foldable_id"
-  add_foreign_key "folders", "projects"
-  add_foreign_key "folders", "users", column: "creator_id"
-  add_foreign_key "invitations", "organizations"
-  add_foreign_key "invitations", "projects"
-  add_foreign_key "invite_links", "organizations"
-  add_foreign_key "invite_links", "projects"
+  add_foreign_key "affiliates", "clients"
+  add_foreign_key "affiliates", "organizations"
+  add_foreign_key "ask_for_testimonies", "organizations"
+  add_foreign_key "awards", "organizations"
+  add_foreign_key "client_accessibilities", "clients"
+  add_foreign_key "client_accessibilities", "groups"
+  add_foreign_key "clients", "organizations"
+  add_foreign_key "groups", "organizations"
+  add_foreign_key "groups", "users", column: "creator_id"
+  add_foreign_key "invites", "groups"
+  add_foreign_key "invites", "organizations"
+  add_foreign_key "leads", "organizations"
+  add_foreign_key "mentions", "tasks"
   add_foreign_key "mentions", "users"
-  add_foreign_key "messages", "tasks"
-  add_foreign_key "messages", "users", column: "creator_id"
-  add_foreign_key "notifications", "projects"
+  add_foreign_key "notifications", "groups"
   add_foreign_key "notifications", "users"
-  add_foreign_key "previews", "users"
-  add_foreign_key "projects", "organizations"
-  add_foreign_key "projects", "users", column: "creator_id"
+  add_foreign_key "pinned_links", "groups"
+  add_foreign_key "rating_answers", "rating_questions"
+  add_foreign_key "rating_answers", "tasks"
+  add_foreign_key "rating_questions", "organizations"
+  add_foreign_key "ratings", "tasks"
+  add_foreign_key "rewards", "affiliates"
+  add_foreign_key "rewards", "print_awards"
   add_foreign_key "roles", "organizations"
   add_foreign_key "roles", "users"
-  add_foreign_key "task_files", "tasks"
-  add_foreign_key "task_files", "users", column: "creator_id"
-  add_foreign_key "tasks", "folders"
-  add_foreign_key "tasks", "projects"
+  add_foreign_key "sub_tasks", "tasks"
+  add_foreign_key "sub_tasks", "users", column: "creator_id"
+  add_foreign_key "tasks", "groups"
   add_foreign_key "tasks", "users", column: "creator_id"
+  add_foreign_key "testimonies", "clients"
+  add_foreign_key "testimonies", "groups"
+  add_foreign_key "testimonies", "organizations"
+  add_foreign_key "user_accessibilities", "groups"
+  add_foreign_key "user_accessibilities", "users"
 end

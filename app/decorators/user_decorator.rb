@@ -6,6 +6,6 @@ class UserDecorator < ApplicationDecorator
   end
 
   def accessibility(project)
-    Accessibility.where(user: object, gruop: gruop).take
+    Accessibility.where(user: object, group: group).take
   end
 end

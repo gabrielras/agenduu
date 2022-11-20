@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Users::InviteLinkPolicy < ApplicationPolicy
+class User::InviteLinkPolicy < ApplicationPolicy
   def index?
     user.role.owner? || user.role.admin?
   end

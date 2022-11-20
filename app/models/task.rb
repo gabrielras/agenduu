@@ -3,7 +3,7 @@ class Task < ApplicationRecord
   friendly_id :title, use: :slugged
 
   belongs_to :creator, class_name: 'User'
-  belongs_to :group, optional: true
+  belongs_to :group
   
   has_many :mentions, as: :viewer, dependent: :destroy
   has_many :sub_tasks, dependent: :destroy

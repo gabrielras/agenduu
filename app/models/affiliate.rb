@@ -1,5 +1,8 @@
 class Affiliate < ApplicationRecord
-  belongs_to :client
+  belongs_to :organization
+  belongs_to :client, optional: true
+  
+  has_one :lead, as: :origin
 
   before_create :create_unique_key
 

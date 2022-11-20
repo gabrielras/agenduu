@@ -17,7 +17,8 @@
     .layout-wrapper.layout-content-navbar
       .layout-container
         / Menu
-        = render partial: 'layouts/sidebar/provider', cached: true
+        - if current_user.try(:organization).present?
+          = render partial: 'layouts/sidebar/user', cached: true
 
         / Layout container
         .layout-page

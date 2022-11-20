@@ -2,13 +2,14 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
   include Pagy::Backend
 
-  before_action :invitation_by_link, :email_security_key
+  before_action :invite, :set_organization
 
-  def invitation_by_link
-    session[:invitation_key] = params[:invitation]
+  def invite
+    session[:invite_key] = params[:invite]
   end
 
-  def email_security_key
-    session[:email_security_key] = params[:email_security_key]
+  def set_organization
+    return if request.subdomain.blank?
+    @organization = Organization.find_by!(slug: request.subdomain)
   end
 end

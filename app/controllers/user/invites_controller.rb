@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User::InvitesController < User::UserController
+class User::InvitesController < UserController
   before_action :set_invite, only: %i[destroy]
 
   def index

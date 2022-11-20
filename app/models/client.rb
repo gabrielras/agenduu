@@ -8,4 +8,6 @@ class Client < ApplicationRecord
 
   validates :full_name, presence: true
   validates :phone_number, presence: true
+
+  validates :phone_number, uniqueness: { scope: :organization_id }
 end

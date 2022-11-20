@@ -1,8 +1,8 @@
 class CreateTasks < ActiveRecord::Migration[6.1]
   def change
     create_table :tasks do |t|
-      t.references :folder, foreign_key: true
       t.references :creator, foreign_key: { to_table: :users }
+      t.references :group, foreign_key: true
 
       t.string :title
       t.string :activity_link

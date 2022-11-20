@@ -12,7 +12,7 @@ class User::OrganizationsController < UserController
   def edit; end
 
   def create
-    result = ::Users::Organizations::Create.result(
+    result = ::Users::Organizations::Create::Received.result(
       owner: current_user,
       attributes: organization_params
     )

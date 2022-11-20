@@ -1,0 +1,9 @@
+%ul.nav.nav-pills.flex-column.flex-md-row.mb-3
+  %li.nav-item
+    %a.nav-link.active{href: "javascript:void(0);"}
+      %i.bx.bx-user.me-1
+      Conta
+  %li.nav-item
+    = link_to destroy_user_session_path, class: 'nav-link' do
+      %i.bx.bx-exit.me-1
+      Sair

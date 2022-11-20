@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User::GroupsController < User::UserController
+class User::GroupsController < UserController
   before_action :set_group, only: %i[edit update destroy]
 
   def index

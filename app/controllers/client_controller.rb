@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ClientController < ApplicationController
-  before_action :authenticate_client!, :confirm_invite
+  layout 'client'
+  before_action :authenticate_client!, :confirm_invite, :set_organization
 
   private
 
@@ -11,5 +12,9 @@ class ClientController < ApplicationController
 
       session[:invitation_key] = nil if result.success?
     end
+  end
+
+  def set_organization
+    autorization @organization
   end
 end

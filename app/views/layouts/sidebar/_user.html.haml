@@ -31,10 +31,22 @@
     %ul.menu-inner.py-1
       / Dashboard
       %li.menu-item
-        = link_to user_provider_projects_path, class: 'menu-link' do
+        = link_to user_groups_path, class: 'menu-link' do
           %i.menu-icon.tf-icons.bx.bx-home-circle
-          Projetos
+          Clientes
       %li.menu-item
-        = link_to user_provider_providers_path, class: 'menu-link' do
+        = link_to user_users_path, class: 'menu-link' do
           %i.menu-icon.tf-icons.bx.bx-user-circle
-          Usuários
+          Funcionários
+      %li.menu-item
+        = link_to user_awards_path, class: 'menu-link' do
+          %i.menu-icon.tf-icons.bx.bx-user-circle
+          Indicações dos Clientes
+      %li.menu-item
+        = link_to edit_user_ask_for_testimony_path(@organization.ask_for_testimony), class: 'menu-link' do
+          %i.menu-icon.tf-icons.bx.bx-user-circle
+          Avalições dos Clientes
+      %li.menu-item
+        = link_to destroy_user_session_path, class: 'menu-link' do
+          %i.menu-icon.tf-icons.bx.bx-exit
+          Sair

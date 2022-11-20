@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User::AwardsController < User::UserController
+class User::AwardsController < UserController
   before_action :set_award, only: %i[destroy]
 
   def new

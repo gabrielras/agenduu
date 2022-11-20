@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Users::ProjectPolicy < ApplicationPolicy
+class User::ProjectPolicy < ApplicationPolicy
   def index?
     true
   end

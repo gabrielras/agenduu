@@ -7,7 +7,15 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
 
-  root 'user/provider/projects#index'
+  root 'user/environments#index'
+
+  namespace :user do
+    resources :environments, only: [:index]
+  end
+
+  namespace :client do
+    resources :environments, only: [:index]
+  end
 
   constraints subdomain: /.*/ do  
     namespace :user do
@@ -28,9 +36,8 @@ Rails.application.routes.draw do
       resources :organizations, except: [:index, :destroy, :show]
       resources :groups, except: [:show]
       resources :users, except: [:show]
-      resources :clients, only: [:index, :destroy]
       resources :invites, except: [:show, :update, :edit]
-      resources :ask_for_testimonies, except: [:show, :update, :edit]
+      resources :ask_for_testimonies, only: [:update, :edit]
       resources :awards, except: [:show, :update, :edit]
       resources :testimonies, except: [:show, :update, :edit]
       resources :dashboards,  only: [:index]

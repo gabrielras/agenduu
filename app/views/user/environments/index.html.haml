@@ -1,0 +1,27 @@
+= flash_message
+
+.content-wrapper
+  / Content
+  .container-xxl.flex-grow-1.container-p-y
+    .col-md-8.mx-auto
+      = render partial: 'layouts/navbar/menu', cached: true
+
+      %h4.fw-bold.py-3.mb-4
+        Acesso
+        %span.text-muted.fw-light / Agenduu
+      .card.mb-4
+        .card-body
+          %h5.card-header Convite
+          .card-body
+            .mb-3.col-12.mb-0
+              .alert.alert-success
+                %h5.alert-heading.fw-bold.mb-1 É funcionário de uma empresa?
+                %p.mb-0 Peça um link de convite para acessar seu ambiente de trabalho. 
+
+          %h5.card-header Empresa
+          .card-body
+            .mb-3.col-12.mb-0
+              .alert.alert-info
+                %h5.alert-heading.fw-bold.mb-1 Sou dono ou sócio de uma empresa?
+                %p.mb-0 Cadastre sua empresa agora mesmo.
+            = link_to 'Cadastrar Empresa', new_user_organization_path, class: 'btn btn-dark'

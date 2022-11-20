@@ -8,7 +8,7 @@ class DeviseCreateClients < ActiveRecord::Migration[6.1]
       t.string :encrypted_password, null: false, default: ""
       t.string :phone_number
       t.string :full_name
-      t.references :gruop, null: false, foreign_key: true
+      t.references :organization, null: false, foreign_key: true
 
       ## Recoverable
       t.string   :reset_password_token
@@ -39,7 +39,7 @@ class DeviseCreateClients < ActiveRecord::Migration[6.1]
       t.timestamps null: false
     end
 
-    add_index :clients, :email,                unique: true
+    add_index :clients, [:email, :organization_id], unique: true
     add_index :clients, :reset_password_token, unique: true
     # add_index :clients, :confirmation_token,   unique: true
     # add_index :clients, :unlock_token,         unique: true

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Users::CustomerPolicy < ApplicationPolicy
+class User::CustomerPolicy < ApplicationPolicy
   def index?
     true
   end

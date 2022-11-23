@@ -22,9 +22,8 @@
 
         / Layout container
         .layout-page
-          / Content wrapper
-          .content-wrapper
-            = yield
-            = turbo_frame_tag "remote_modal"
+
+          = yield
+          = turbo_frame_tag "remote_modal"
           / Content wrapper
         / / Layout page

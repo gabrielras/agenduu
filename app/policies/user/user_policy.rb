@@ -8,7 +8,7 @@ class User::UserPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.joins(:roles).where(roles: { organization_id: user.decorate.provider.id })
+      scope.joins(:organization).where(organization: { id: user.organization.id })
     end
 
     private

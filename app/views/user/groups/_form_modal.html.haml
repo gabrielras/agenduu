@@ -3,10 +3,10 @@
     .modal-dialog
       .modal-content
         .modal-header
-          %h5.modal-title Projeto
+          %h5.modal-title group
           %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", type: "button"}
-        = form_with model: project,
-                    url: (project.new_record? ? user_provider_projects_path : user_provider_project_path(project)),
+        = form_with model: group,
+                    url: group.new_record? ? user_groups_path : user_group_path(group),
                     html: { class: 'require-validation' }, validate: true do |f|
           .modal-body
 

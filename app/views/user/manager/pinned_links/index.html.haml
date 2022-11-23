@@ -1,0 +1,16 @@
+= flash_message
+
+.content-wrapper{style: 'background-color: #f4de6d'}
+  
+  .container-xxl.flex-grow-1.container-p-y
+    .col-10.mx-auto
+      = render partial: 'user/manager/menu'
+
+      %br
+      .col-12
+        .card.mb-4
+          .card-body
+            .input-group.input-group-merge
+              %span#basic-addon-search31.input-group-text
+                %i.bx.bx-search
+              %input.form-control{"aria-describedby" => "basic-addon-search31", "aria-label" => "Search...", placeholder: "Search...", type: "text"}/

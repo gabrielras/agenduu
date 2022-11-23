@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-class Users::Manager::NotificationPolicy < ApplicationPolicy
-   class Scope
+class User::Manager::GroupPolicy < ApplicationPolicy
+  class Scope
     def initialize(user, scope)
       @user  = user
       @scope = scope
     end
 
     def resolve
-      scope.joins(:user).where(user: { id: user.id })
+      scope.joins(:organization).where(organization: { id: user.organization.id })
     end
 
     private
@@ -16,4 +16,3 @@ class Users::Manager::NotificationPolicy < ApplicationPolicy
     attr_reader :user, :scope
   end
 end
-

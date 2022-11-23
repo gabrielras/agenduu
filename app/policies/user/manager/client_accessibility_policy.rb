@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User::Manager::PinnedLinkPolicy < ApplicationPolicy
+class User::Manager::ClientAccessibilityPolicy < ApplicationPolicy
   def index?
     true
   end
@@ -18,6 +18,10 @@ class User::Manager::PinnedLinkPolicy < ApplicationPolicy
   end
 
   def update?
+    true
+  end
+
+  def destroy?
     true
   end
 

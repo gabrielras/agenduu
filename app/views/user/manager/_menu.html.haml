@@ -1,13 +1,5 @@
-%ul.nav.nav-pills.flex-column.flex-md-row.mb-3
-  %li.nav-item
-    = link_to user_provider_manager_project_folders_path(@project), class: 'nav-link active' do
-      %i.bx.bx-box.me-1
-      Arquivos
-  %li.nav-item
-    = link_to user_provider_manager_project_notifications_path(@project), class: 'nav-link' do
-      %i.bx.bx-bell.me-1
-      Notificações
-  %li.nav-item
-    = link_to user_provider_manager_project_accessibilities_path(@project), class: 'nav-link' do
-      %i.bx.bx-user.me-1
-      Participantes
+.card.text-center
+  .card-body
+    .wrapper
+      %h3= @group.title
+      %p= @group.organization.title

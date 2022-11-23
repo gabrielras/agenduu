@@ -32,7 +32,7 @@
       / Dashboard
       %li.menu-item
         = link_to user_groups_path, class: 'menu-link' do
-          %i.menu-icon.tf-icons.bx.bx-home-circle
+          %i.menu-icon.tf-icons.bx.bx-happy
           Clientes
       %li.menu-item
         = link_to user_users_path, class: 'menu-link' do
@@ -40,11 +40,11 @@
           Funcionários
       %li.menu-item
         = link_to user_awards_path, class: 'menu-link' do
-          %i.menu-icon.tf-icons.bx.bx-user-circle
+          %i.menu-icon.tf-icons.bx.bx-share
           Indicações dos Clientes
       %li.menu-item
         = link_to edit_user_ask_for_testimony_path(@organization.ask_for_testimony.try(:id)), class: 'menu-link' do
-          %i.menu-icon.tf-icons.bx.bx-user-circle
+          %i.menu-icon.tf-icons.bx.bx-happy-heart-eyes
           Avalições dos Clientes
       %li.menu-item
         = link_to destroy_user_session_path, class: 'menu-link' do

@@ -1,23 +1,29 @@
 # frozen_string_literal: true
 
-class User::Manager::ManagerController < UserController
-  before_action :validate_organization
+class User::Manager::ManagerController < ApplicationController
+  before_action :authenticate_user!, :confirm_invite, :authorize_organization
 
   def policy_scope(scope)
-    super([:user, :provider, :manager, scope])
+    super([:user, :manager, scope])
   end
 
   def authorize(record, query = nil)
-    super([:user, :provider, :manager, record], query)
+    super([:user, :manager, record], query)
   end
 
   private
 
-  def validate_organization
-    return if controller_path.include?('user/provider/organizations') || current_user.decorate.in_provider?
+  def confirm_invite
+    if session[:invitation_key].present?
+      result = Users::Invites::Confirm.result(user: current_user, invite_key: session[:invitation_key])
 
-    redirect_to new_user_provider_organization_path, alert: 'Antes de continuar, cadastre sua empresa'
-  rescue
-    redirect_to new_user_provider_organization_path, alert: 'Antes de continuar, cadastre sua empresa'
+      session[:invitation_key] = nil if result.success?
+    end
+  end
+
+  def authorize_organization
+    return if controller_path.include?('user/environments')
+
+    authorize(organization) 
   end
 end

@@ -4,7 +4,7 @@ class User::UsersController < UserController
   before_action :set_user, only: %i[edit update destroy]
 
   def index
-    @q = policy_scope(User).joins(:roles).where.not(roles: { role_type: 'customer'}).ransack(params[:q])
+    @q = policy_scope(User).ransack(params[:q])
     result = @q.result(distinct: true).order(created_at: :desc)
     @pagy, @users = pagy(result, items: 10)
   end
@@ -16,7 +16,7 @@ class User::UsersController < UserController
     )
 
     if result.success?
-      redirect_to edit_user_provider_role_path(result.user), notice: 'atualizado'
+      redirect_to user_users_path, notice: 'atualizado'
     else
       flash[:alert] = result.error
 
@@ -31,11 +31,9 @@ class User::UsersController < UserController
     )
 
     if result.success?
-      redirect_to user_provider_users_path, notice: 'Removido'
+      redirect_to user_users_path, notice: 'Removido'
     else
-      flash[:alert] = result.error
-
-      render :edit
+      redirect_to user_users_path, alert: result.error
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_19_172335) do
+ActiveRecord::Schema.define(version: 2022_11_20_222202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,8 +125,10 @@ ActiveRecord::Schema.define(version: 2022_11_19_172335) do
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
     t.index ["creator_id"], name: "index_groups_on_creator_id"
     t.index ["organization_id"], name: "index_groups_on_organization_id"
+    t.index ["slug"], name: "index_groups_on_slug", unique: true
   end
 
   create_table "invites", force: :cascade do |t|
@@ -214,12 +216,10 @@ ActiveRecord::Schema.define(version: 2022_11_19_172335) do
   end
 
   create_table "rating_questions", force: :cascade do |t|
-    t.bigint "organization_id", null: false
     t.integer "value"
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_rating_questions_on_organization_id"
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -339,7 +339,6 @@ ActiveRecord::Schema.define(version: 2022_11_19_172335) do
   add_foreign_key "pinned_links", "groups"
   add_foreign_key "rating_answers", "rating_questions"
   add_foreign_key "rating_answers", "tasks"
-  add_foreign_key "rating_questions", "organizations"
   add_foreign_key "ratings", "tasks"
   add_foreign_key "rewards", "affiliates"
   add_foreign_key "rewards", "print_awards"

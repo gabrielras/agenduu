@@ -4,7 +4,7 @@ class User::InvitesController < UserController
   before_action :set_invite, only: %i[destroy]
 
   def index
-    @q = policy_scope(Invite).where(organization: current_user.decorate.provider, project: nil).where.not(role_type: 'customer').ransack(params[:q])
+    @q = policy_scope(Invite).where(group: nil).ransack(params[:q])
     result = @q.result(distinct: true).order(created_at: :desc)
     @pagy, @invites = pagy(result, items: 10)
   end
@@ -19,9 +19,9 @@ class User::InvitesController < UserController
     )
 
     if result.success?
-      redirect_to user_provider_invites_path, notice: 'criado'
+      redirect_to user_invites_path, notice: 'criado'
     else
-      redirect_to user_provider_invites_path, alert: result.error
+      redirect_to user_invites_path, alert: result.error
     end
   end
 
@@ -31,9 +31,9 @@ class User::InvitesController < UserController
     )
 
     if result.success?
-      redirect_to user_provider_invites_path, notice: 'removido'
+      redirect_to user_invites_path, notice: 'removido'
     else
-      redirect_to user_provider_invites_path, alert: result.error
+      redirect_to user_invites_path, alert: result.error
     end
   end
 

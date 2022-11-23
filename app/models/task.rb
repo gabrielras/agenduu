@@ -5,6 +5,8 @@ class Task < ApplicationRecord
   belongs_to :creator, class_name: 'User'
   belongs_to :group
   
+  has_one :organization, through: :group
+
   has_many :mentions, as: :viewer, dependent: :destroy
   has_many :sub_tasks, dependent: :destroy
 

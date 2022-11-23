@@ -1,0 +1,31 @@
+.card.text-center
+  .card-body
+    .wrapper
+      %h3= @group.title
+      %p= @group.organization.title
+
+    %ul.nav.nav-pills.flex-column.flex-md-row.mb-3
+      %li.nav-item
+        = link_to user_manager_group_tasks_path(@group), class: "nav-link #{controller_name == 'tasks'? 'active': ''}" do
+          %i.bx.bx-purchase-tag-alt.me-1
+          Atividades
+      %li.nav-item
+        = link_to user_manager_group_pinned_links_path(@group), class: "nav-link #{controller_name == 'pinned_links'? 'active': ''}" do
+          %i.bx.bx-pin.me-1
+          Fixados
+      %li.nav-item
+        = link_to user_manager_group_rewards_path(@group), class: "nav-link #{controller_name == 'rewards'? 'active': ''}" do
+          %i.bx.bx-money.me-1
+          Indicações
+      %li.nav-item
+        = link_to user_manager_group_testimonies_path(@group), class: "nav-link #{controller_name == 'testimonies'? 'active': ''}" do
+          %i.bx.bx-star.me-1
+          Avaliações
+      %li.nav-item
+        = link_to user_manager_group_client_accessibilities_path(@group), class: "nav-link#{controller_name == 'client_accessibilities'? 'active': ''}" do
+          %i.bx.bx-user.me-1
+          Usuários
+      %li.nav-item
+        = link_to user_manager_group_user_accessibilities_path(@group), class: "nav-link #{controller_name == 'user_accessibilities'? 'active': ''}" do
+          %i.bx.bx-buildings.me-1
+          Funcionários

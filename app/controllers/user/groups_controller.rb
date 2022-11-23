@@ -15,12 +15,11 @@ class User::GroupsController < UserController
 
   def create
     result = ::Users::Groups::Create.result(
-      current_user: current_user,
       attributes: group_params
     )
 
     if result.success?
-      redirect_to user_manager_groups_path(result.group), notice: 'criado'
+      redirect_to user_manager_tasks_path(result.group), notice: 'criado'
     else
       @message_error = result.error
       @group = result.group
@@ -37,7 +36,7 @@ class User::GroupsController < UserController
     )
 
     if result.success?
-      redirect_to edit_user_group_path(result.group), notice: 'atualizado'
+      redirect_to user_groups_path, notice: 'atualizado'
     else
       flash[:alert] = result.error
 
@@ -61,7 +60,7 @@ class User::GroupsController < UserController
   private
 
   def group_params
-    params.require(:group).permit(:title).merge(organization: current_user.decorate.organization).to_h
+    params.require(:group).permit(:title).merge(organization: organization, creator: current_user).to_h
   end
 
   def set_group

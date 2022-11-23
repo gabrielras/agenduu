@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-class User::Manager::PinnedLinkPolicy < ApplicationPolicy
+class User::AwardPolicy < ApplicationPolicy
   def index?
     true
   end
 
   def new?
-    true
+    user.role.owner? || user.role.admin?
   end
 
   def edit?
-    true
-  end
-
-  def create?
-    true
+    new?
   end
 
   def update?
-    true
+    new?
+  end
+
+  def destroy?
+    new?
   end
 
   class Scope
@@ -28,7 +28,7 @@ class User::Manager::PinnedLinkPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.joins(group: :organization).where(organization: { id: user.organization.id })
+      scope.joins(:organization).where(organization: { id: user.organization.id })
     end
 
     private

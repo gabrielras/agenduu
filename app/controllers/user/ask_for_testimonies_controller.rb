@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User::AskForTestimoniesController < UserController
-  before_action :set_ask_for_testimony, only: %i[update]
+  before_action :set_ask_for_testimony
 
   def edit
   end
@@ -28,6 +28,6 @@ class User::AskForTestimoniesController < UserController
   end
 
   def set_ask_for_testimony
-    @ask_for_testimony = policy_class(AskForTestimony).find(params[:id])
+    @ask_for_testimony = policy_scope(AskForTestimony).find(params[:id])
   end
 end

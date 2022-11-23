@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserController < ApplicationController
-  before_action :authenticate_user!, :confirm_invite, :set_organization
+  before_action :authenticate_user!, :confirm_invite, :authorize_organization
 
   def policy_scope(scope)
     super([:user, scope])
@@ -21,9 +21,9 @@ class UserController < ApplicationController
     end
   end
 
-  def set_organization
-    return if @organization.blank?
+  def authorize_organization
+    return if controller_path.include?('user/environments')
 
-    authorize([:user, @organization]) 
+    authorize(organization) 
   end
 end

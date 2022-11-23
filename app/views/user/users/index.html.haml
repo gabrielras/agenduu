@@ -11,13 +11,12 @@
       .card-body
         .row.gy-3
           .col-lg-4.col-md-6
-            = link_to 'Convites', user_provider_invitations_path, class: 'btn btn-dark', "data-turbolinks": "false"
-            = link_to 'Clientes', user_provider_customers_path, class: 'btn btn-warning', "data-turbolinks": "false"
+            = link_to 'Convites', user_invites_path, class: 'btn btn-primary', "data-turbolinks": "false"
 
       %h5.card-header Listagem de Funcionários
       .card-body
         %div.mb-4
-          = search_form_for @q, url: user_provider_providers_path do |f|
+          = search_form_for @q, url: user_users_path do |f|
             = f.search_field :full_name_or_email_cont, class: 'form-control', placeholder: "Pesquisar por nome ou email"
         .table-responsive.text-nowrap
           %table.table.table-dark
@@ -29,4 +28,4 @@
               - @users.each do |user|
                 %tr
                   %td= user.full_name
-                  %td= I18n.t("enumerations.role_enum.role_types.#{user.decorate.role.role_type}")
+                  %td= I18n.t("enumerations.role_enum.role_types.#{user.role.role_type}")

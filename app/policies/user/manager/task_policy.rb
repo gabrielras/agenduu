@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Users::Manager::TaskPolicy < ApplicationPolicy
+class User::Manager::TaskPolicy < ApplicationPolicy
   def index?
     true
   end
@@ -21,10 +21,6 @@ class Users::Manager::TaskPolicy < ApplicationPolicy
     true
   end
 
-  def move_to?
-    true
-  end
-
   class Scope
     def initialize(user, scope)
       @user  = user
@@ -32,7 +28,7 @@ class Users::Manager::TaskPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.joins(project: :organization).where(organization: { id: user.decorate.provider.id })
+      scope.joins(:organization).where(organization: { id: user.organization.id })
     end
 
     private

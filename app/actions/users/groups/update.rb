@@ -20,7 +20,7 @@ module Users
       private
 
       def user_valid
-        ['admin', 'onwer'].include?(current_user.decorate.role.role_type) ||
+        ['admin', 'onwer'].include?(current_user.role.role_type) ||
         Accessibility.where(allows: 'manager', group: group, user: current_user)
       end
     end

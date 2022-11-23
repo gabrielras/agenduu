@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Users::Manager::ProjectPolicy < ApplicationPolicy
+class User::Manager::InvitePolicy < ApplicationPolicy
   class Scope
     def initialize(user, scope)
       @user  = user

@@ -1,11 +1,11 @@
 pt-BR:
   activerecord:
     models:
-      project:
-        one: Projeto
-        other: Projetos
+      group:
+        one: Cliente
+        other: Clientes
     attributes:
-      project:
+      group:
         id: id
         organization_id: organização
         organization: organização

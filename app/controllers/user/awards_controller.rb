@@ -3,6 +3,10 @@
 class User::AwardsController < UserController
   before_action :set_award, only: %i[destroy]
 
+  def index
+    @award = organization.award
+  end
+
   def new
     @award = Award.new
   end
@@ -52,6 +56,6 @@ class User::AwardsController < UserController
   end
 
   def set_award
-    @award = policy_class(Award).find(params[:id])
+    @award = policy_scope(Award).find(params[:id])
   end
 end

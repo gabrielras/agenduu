@@ -1,24 +1,12 @@
 # frozen_string_literal: true
 
-class User::InvitePolicy < ApplicationPolicy
-  def index?
+class User::AskForTestimonyPolicy < ApplicationPolicy
+  def edit?
     user.role.owner? || user.role.admin?
   end
 
-  def create?
-    index?
-  end
-
-  def new?
-    index?
-  end
-
-  def edit?
-    index?
-  end
-
   def update?
-    index?
+    edit?
   end
 
   class Scope

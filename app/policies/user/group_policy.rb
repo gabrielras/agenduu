@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-class User::ProjectPolicy < ApplicationPolicy
+class User::GroupPolicy < ApplicationPolicy
   def index?
-    true
+    user.role.owner? || user.role.admin?
   end
 
   def create?
-    true
+    index?
   end
 
   def new?
-    true
+    index?
   end
 
   def edit?
-    user.role.owner? || user.role.admin? || record.creator == user
+    index?
   end
 
   def update?
-    edit?
+    index?
   end
 
   class Scope
@@ -28,7 +28,7 @@ class User::ProjectPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.joins(:organization).where(organization: { id: user.decorate.provider.id })
+      scope.joins(:organization).where(organization: { id: user.organization.id })
     end
 
     private

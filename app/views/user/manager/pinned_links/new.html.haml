@@ -1,0 +1,25 @@
+= render partial: 'user/provider/manager/provider_menu', cache: true
+
+.content-wrapper
+  / Content
+  .container-xxl.flex-grow-1.container-p-y      
+    .col-md-8.mx-auto
+      .card.mb-4
+        .card-body
+          .demo-inline-spacing
+            - if @folder.present?
+              = link_to user_provider_manager_project_folder_path(@project, @folder) do
+                %button.btn.btn-secondary 
+                  %i.menu-icon.tf-icons.bx.bx-arrow-back
+                  = @folder.title
+            - else
+              = link_to user_provider_manager_project_folders_path(@project) do
+                %button.btn.btn-secondary 
+                  %i.menu-icon.tf-icons.bx.bx-arrow-back
+                  = @project.title
+
+      %h4.fw-bold.py-3.mb-4
+        Atividade
+        %span.text-muted.fw-light / Criar
+
+      = render 'form'

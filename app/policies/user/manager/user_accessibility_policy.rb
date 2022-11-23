@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Users::Manager::AccessibilityPolicy < ApplicationPolicy
+class User::Manager::UserAccessibilityPolicy < ApplicationPolicy
   def index?
     true
   end
@@ -32,7 +32,7 @@ class Users::Manager::AccessibilityPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope.joins(project: :organization).where(organization: { id: user.decorate.provider.id })
+      scope.joins(group: :organization).where(organization: { id: user.organization.id })
     end
 
     private

@@ -21,8 +21,8 @@ Rails.application.routes.draw do
     namespace :user do
       namespace :manager do
         resources :group, except: [:destroy] do
-          resources :accessibilities
-          resources :clients
+          resources :user_accessibilities
+          resources :client_accessibilities
           resources :invites
           resources :pinned_links
           resources :rewards

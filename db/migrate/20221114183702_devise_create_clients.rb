@@ -4,11 +4,12 @@ class DeviseCreateClients < ActiveRecord::Migration[6.1]
   def change
     create_table :clients do |t|
       ## Database authenticatable
+      t.references :organization, null: false, foreign_key: true
+
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
-      t.string :phone_number
       t.string :full_name
-      t.references :organization, null: false, foreign_key: true
+      t.string :phone_number
 
       ## Recoverable
       t.string   :reset_password_token
@@ -40,6 +41,7 @@ class DeviseCreateClients < ActiveRecord::Migration[6.1]
     end
 
     add_index :clients, [:email, :organization_id], unique: true
+    add_index :clients, [:phone_number, :organization_id], unique: true
     add_index :clients, :reset_password_token, unique: true
     # add_index :clients, :confirmation_token,   unique: true
     # add_index :clients, :unlock_token,         unique: true

@@ -4,10 +4,10 @@ module Users
   module Organizations
     class Update < Actor
       input :attributes, type: Hash
-      input :provider, type: Organization
+      input :organization, type: Organization
 
       def call
-        self.provider.update!(attributes)
+        self.organization.update!(attributes)
       rescue StandardError => e
         fail!(error: e.message)
       end

@@ -1,6 +1,6 @@
 class Invite < ApplicationRecord
   belongs_to :organization
-  belongs_to :group, optional: true
+  belongs_to :affiliate_with_white_label, optional: true
 
   has_enumeration_for :role_type, with: InviteEnum::RoleTypes, create_helpers: true
 

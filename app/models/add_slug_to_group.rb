@@ -1,2 +1,0 @@
-class AddSlugToGroup < ApplicationRecord
-end

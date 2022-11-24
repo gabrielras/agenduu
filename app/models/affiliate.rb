@@ -3,11 +3,11 @@ class Affiliate < ApplicationRecord
 
   belongs_to :organization
 
-  has_many :awards, dependent: :destroy
+  has_many :award_affiliates, dependent: :destroy
+  has_many :awards,through: :award_affiliates
 
   validates :full_name, presence: true
   validates :email, presence: true
-  validates :phone_number, presence: true
 
   validates :email, uniqueness: { scope: :organization_id }
   validates :phone_number, uniqueness: { scope: :organization_id }

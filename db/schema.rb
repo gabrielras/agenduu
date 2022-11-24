@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_24_023710) do
+ActiveRecord::Schema.define(version: 2022_11_24_141838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,7 +55,6 @@ ActiveRecord::Schema.define(version: 2022_11_24_023710) do
 
   create_table "affiliates", force: :cascade do |t|
     t.bigint "organization_id", null: false
-    t.bigint "award_id"
     t.string "full_name"
     t.string "email"
     t.string "phone_number"
@@ -63,9 +62,17 @@ ActiveRecord::Schema.define(version: 2022_11_24_023710) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
-    t.index ["award_id"], name: "index_affiliates_on_award_id"
     t.index ["organization_id"], name: "index_affiliates_on_organization_id"
     t.index ["slug"], name: "index_affiliates_on_slug", unique: true
+  end
+
+  create_table "award_affiliates", force: :cascade do |t|
+    t.bigint "award_id", null: false
+    t.bigint "affiliate_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["affiliate_id"], name: "index_award_affiliates_on_affiliate_id"
+    t.index ["award_id"], name: "index_award_affiliates_on_award_id"
   end
 
   create_table "award_histories", force: :cascade do |t|
@@ -78,10 +85,12 @@ ActiveRecord::Schema.define(version: 2022_11_24_023710) do
 
   create_table "award_templates", force: :cascade do |t|
     t.bigint "award_id", null: false
-    t.string "type_template"
+    t.string "template_type"
     t.string "title"
     t.string "description"
     t.string "text_submit"
+    t.string "primary_color"
+    t.string "secondary_color"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["award_id"], name: "index_award_templates_on_award_id"
@@ -200,14 +209,6 @@ ActiveRecord::Schema.define(version: 2022_11_24_023710) do
     t.index ["user_id"], name: "index_roles_on_user_id"
   end
 
-  create_table "schedules", force: :cascade do |t|
-    t.bigint "organization_id", null: false
-    t.string "type_schedule"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_schedules_on_organization_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "full_name"
     t.string "email", default: "", null: false
@@ -228,8 +229,9 @@ ActiveRecord::Schema.define(version: 2022_11_24_023710) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "affiliates", "awards"
   add_foreign_key "affiliates", "organizations"
+  add_foreign_key "award_affiliates", "affiliates"
+  add_foreign_key "award_affiliates", "awards"
   add_foreign_key "award_histories", "organizations"
   add_foreign_key "award_templates", "awards"
   add_foreign_key "awards", "organizations"
@@ -242,5 +244,4 @@ ActiveRecord::Schema.define(version: 2022_11_24_023710) do
   add_foreign_key "rewards", "leads"
   add_foreign_key "roles", "organizations"
   add_foreign_key "roles", "users"
-  add_foreign_key "schedules", "organizations"
 end

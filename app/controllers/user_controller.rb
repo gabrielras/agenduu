@@ -26,4 +26,9 @@ class UserController < ApplicationController
 
     authorize(organization) 
   end
+
+  def organization
+    return if request.subdomain.blank?
+    @organization = Organization.find_by!(slug: request.subdomain)
+  end
 end

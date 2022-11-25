@@ -4,7 +4,9 @@ class User::AwardsController < UserController
   before_action :set_award, only: %i[destroy]
 
   def index
-    @award = organization.award
+    @q = policy_scope(Award).ransack(params[:q])
+    result = @q.result(distinct: true).order(created_at: :desc)
+    @pagy, @awards = pagy(result, items: 10)
   end
 
   def new
@@ -32,9 +34,9 @@ class User::AwardsController < UserController
     )
 
     if result.success?
-      redirect_to user_provider_awards_path, notice: 'criado'
+      redirect_to user_awards_path, notice: 'criado'
     else
-      redirect_to user_provider_awards_path, alert: result.error
+      redirect_to user_awards_path, alert: result.error
     end
   end
 
@@ -51,7 +53,7 @@ class User::AwardsController < UserController
   private
 
   def award_params
-    params.require(:award).permit(:current_client, :business_cell_phone, :new_client)
+    params.require(:award).permit(:to_affiliate, :to_lead, :rule, :business_cell_phone, :new_client)
       .merge(organization: current_user.organization).to_h
   end
 

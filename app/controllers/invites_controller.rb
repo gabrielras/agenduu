@@ -3,8 +3,7 @@
 class Common::InvitesController < CommonController
   before_action :set_invite
 
-  def show
-  end
+  def show; end
 
   private
 

@@ -22,7 +22,7 @@ class UserController < ApplicationController
   end
 
   def authorize_organization
-    return if controller_path.include?('user/environments')
+    return if controller_path.include?('user/environments') || (controller_path.include?('user/organizations') && ['new', 'create'].include?(action_name))
 
     authorize(organization) 
   end

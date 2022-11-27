@@ -1,0 +1,42 @@
+.layout-wrapper{style: 'background-color: yellow'}
+  .layout-container
+    .authentication-wrapper.authentication-basic.container-p-y
+      .authentication-inner.py-4{style: 'max-width: 1000px;'}
+        .p-2.mb-3
+          .col-12
+            = link_to 'Voltar', user_award_path(@award), class: 'btn btn-secondary'
+            = link_to 'Editar', user_award_path(@award), class: 'btn btn-dark'
+
+        .card
+          .col-12
+            .row.p-5.align-items-center
+              .col-7
+                %h2.display-5.mb-3.fw-semibold.lh-sm Seu Código é 441B 🚀
+                %h4.mb-3 Compartilhe seu código ou link com quem você conhece.
+                %p.lead.fw-normal
+                  fjasdad.localhost:3000/indicar
+
+                %br
+                  = link_to new_user_award_path, class: 'btn btn-dark mb-3' do
+                    %i.menu-icon.tf-icons.bx.bx-copy
+                    Copiar Link
+              .col-5
+                .card-body
+                  .col-12
+                    %h4.mb-2 Compartilhe Aqui 👇 
+                    .demo-inline-spacing
+                      %button.btn.btn-icon.btn-primary{type: "button"}
+                        %span.tf-icons.bx.bxl-facebook
+                      %button.btn.btn-icon.btn-danger{type: "button"}
+                        %span.tf-icons.bx.bxl-instagram
+                      %button.btn.btn-icon.btn-success{type: "button"}
+                        %span.tf-icons.bx.bxl-whatsapp
+                      %button.btn.btn-icon.btn-dark{type: "button"}
+                        %span.tf-icons.bx.bxl-tiktok
+                      %button.btn.btn-icon.btn-info{type: "button"}
+                        %span.tf-icons.bx.bxl-twitter
+            %hr
+            .p-5.align-items-center
+              %h2.fw-semibold Regras
+              %p
+                Converta seus visitantes em indicadores, consiga mais clientes.

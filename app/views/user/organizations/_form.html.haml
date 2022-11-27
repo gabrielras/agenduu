@@ -1,7 +1,8 @@
 = flash_message
 
 = form_with model: @organization,
-            url: (@organization.new_record? ? user_organizations_path : user_organization_path),
+            url: (@organization.new_record? ? user_organizations_path : user_organization_path(@organization)),
+            method: (@organization.new_record? ? :post : :put),
             html: { class: 'require-validation' }, validate: true do |f|
 
   .card.mb-4

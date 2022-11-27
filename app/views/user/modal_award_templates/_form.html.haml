@@ -1,0 +1,24 @@
+= flash_message
+
+= form_with model: @modal_award_template,
+            url: user_award_modal_award_template_path(@award, @modal_award_template),
+            method: :put,
+            html: { class: 'require-validation' }, validate: true do |f|
+
+  .mb-3
+    = f.label :to_affiliate, class: 'col-form-label'
+    = f.text_area :to_affiliate,
+                class: 'form-control'
+  .mb-3
+    = f.label :to_lead, class: 'col-form-label'
+    = f.text_area :to_lead, class: 'form-control'
+  .mb-3
+    = f.label :rule, class: 'col-form-label'
+    = f.text_area :rule, class: 'form-control'
+  .mb-3
+    = f.label :business_cell_phone, class: 'col-form-label'
+    = f.text_field :business_cell_phone, class: 'form-control', placeholder: '(00) 00000-0000'
+
+  .mt-2.mb-3
+    = link_to 'Voltar', user_award_path(@award), class: 'btn btn-secondary'
+    = f.submit t('.confirm', default: t("helpers.submit.save")), class: 'btn btn-dark'

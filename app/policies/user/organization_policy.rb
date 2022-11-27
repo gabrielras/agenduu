@@ -21,6 +21,10 @@ class User::OrganizationPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    true
+  end
+
   class Scope
     def initialize(user, scope)
       @user  = user

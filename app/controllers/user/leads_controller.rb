@@ -4,7 +4,9 @@ class User::LeadsController < UserController
   before_action :set_lead, only: %i[destroy]
 
   def index
-    @lead = organization.lead
+    @q = policy_scope(Lead).ransack(params[:q])
+    result = @q.result(distinct: true).order(created_at: :desc)
+    @pagy, @leads = pagy(result, items: 10)
   end
 
   def new
@@ -33,16 +35,6 @@ class User::LeadsController < UserController
 
     if result.success?
       redirect_to user_leads_path, notice: 'criado'
-    else
-      redirect_to user_leads_path, alert: result.error
-    end
-  end
-
-  def destroy
-    result = ::Users::Leads::Destroy.result(lead: @lead)
-
-    if result.success?
-      redirect_to user_leads_path, notice: 'removido'
     else
       redirect_to user_leads_path, alert: result.error
     end

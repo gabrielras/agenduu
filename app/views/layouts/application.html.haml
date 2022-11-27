@@ -7,7 +7,6 @@
     %meta{:content => "black", :name => "theme-color"}/
     %link{:href => "https://fonts.googleapis.com", :rel => "preconnect"}/
     %link{:crossorigin => "", :href => "https://fonts.gstatic.com", :rel => "preconnect"}/
-    %link{:href => "https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap", :rel => "stylesheet"}/
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -17,7 +16,7 @@
     .layout-wrapper.layout-content-navbar
       .layout-container
         / Menu
-        - if current_user.try(:organization).present?
+        - if sidebar_user
           = render partial: 'layouts/sidebar/user', cached: true
 
         / Layout container

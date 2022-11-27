@@ -4,7 +4,9 @@ module Users
   module Organizations
     module Create
       class Received < Actor
-        play Default, Invites
+        ActiveRecord::Base.transaction do
+          play Default, Invites
+        end
       end
     end
   end

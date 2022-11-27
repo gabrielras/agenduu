@@ -4,16 +4,15 @@ class User::RewardsController < UserController
   before_action :set_reward, only: %i[destroy]
 
   def index
-    @reward = organization.reward
   end
 
   def new
-    @award = Reward.new
+    @reward = Reward.new
   end
 
   def create
     result = ::Users::Rewards::Create.result(
-      attributes: awards_params
+      attributes: rewards_params
     )
 
     if result.success?
@@ -24,7 +23,7 @@ class User::RewardsController < UserController
   end
 
   def destroy
-    result = ::Users::Rewards::Destroy.result(award: @award)
+    result = ::Users::Rewards::Destroy.result(reward: @reward)
 
     if result.success?
       redirect_to user_rewards_path, notice: 'removido'
@@ -36,8 +35,7 @@ class User::RewardsController < UserController
   private
 
   def reward_params
-    params.require(:reward).permit(:to_affiliate, :to_lead, :rule, :business_cell_phone, :new_client)
-      .merge(organization: current_user.organization).to_h
+    params.require(:reward).permit(:affiliate_id, :lead_id)
   end
 
   def set_reward

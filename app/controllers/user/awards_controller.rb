@@ -1,42 +1,48 @@
 # frozen_string_literal: true
 
 class User::AwardsController < UserController
-  before_action :set_award, only: %i[destroy]
+  before_action :set_award, except: %i[index new create]
 
   def index
-    @q = policy_scope(Award).ransack(params[:q])
-    result = @q.result(distinct: true).order(created_at: :desc)
-    @pagy, @awards = pagy(result, items: 10)
+    @award = policy_scope(Award).where(type_of_award: 'main').take
+    redirect_to user_award_path(@award) if @award.present?
   end
 
   def new
     @award = Award.new
   end
 
+  def show; end
+
   def edit; end
 
   def create
-    result = ::Users::Awards::Create.result(
-      attributes: awards_params
+    result = ::Users::Awards::Create::Received.result(
+      attributes: award_params
     )
 
     if result.success?
-      redirect_to user_awards_path, notice: 'criado'
+      redirect_to user_award_path(result.award), notice: 'criado'
     else
-      redirect_to user_awards_path, alert: result.error
+      flash[:alert] = result.error
+      @award = result.award
+
+      render :new
     end
   end
 
   def update
     result = ::Users::Awards::Update.result(
-      attributes: awards_params,
+      attributes: award_params,
       award: @award
     )
 
     if result.success?
-      redirect_to user_awards_path, notice: 'criado'
+      redirect_to user_award_path(@award), notice: 'criado'
     else
-      redirect_to user_awards_path, alert: result.error
+      flash[:alert] = result.error
+
+      render :edit
     end
   end
 
@@ -46,7 +52,7 @@ class User::AwardsController < UserController
     if result.success?
       redirect_to user_awards_path, notice: 'removido'
     else
-      redirect_to user_awards_path, alert: result.error
+      redirect_to user_award_path(@award), alert: result.error
     end
   end
 
@@ -54,7 +60,7 @@ class User::AwardsController < UserController
 
   def award_params
     params.require(:award).permit(:to_affiliate, :to_lead, :rule, :business_cell_phone, :new_client)
-      .merge(organization: current_user.organization).to_h
+      .merge(organization: current_user.organization, type_of_award: 'main').to_h
   end
 
   def set_award

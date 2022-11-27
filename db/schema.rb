@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_24_141838) do
+ActiveRecord::Schema.define(version: 2022_11_26_134345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,15 @@ ActiveRecord::Schema.define(version: 2022_11_24_141838) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "affiliate_leads", force: :cascade do |t|
+    t.bigint "affiliate_id", null: false
+    t.bigint "lead_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["affiliate_id"], name: "index_affiliate_leads_on_affiliate_id"
+    t.index ["lead_id"], name: "index_affiliate_leads_on_lead_id"
+  end
+
   create_table "affiliates", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "full_name"
@@ -83,21 +92,9 @@ ActiveRecord::Schema.define(version: 2022_11_24_141838) do
     t.index ["organization_id"], name: "index_award_histories_on_organization_id"
   end
 
-  create_table "award_templates", force: :cascade do |t|
-    t.bigint "award_id", null: false
-    t.string "template_type"
-    t.string "title"
-    t.string "description"
-    t.string "text_submit"
-    t.string "primary_color"
-    t.string "secondary_color"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["award_id"], name: "index_award_templates_on_award_id"
-  end
-
   create_table "awards", force: :cascade do |t|
     t.bigint "organization_id", null: false
+    t.string "type_of_award"
     t.string "to_affiliate"
     t.string "to_lead"
     t.string "rule"
@@ -148,6 +145,7 @@ ActiveRecord::Schema.define(version: 2022_11_24_141838) do
 
   create_table "invites", force: :cascade do |t|
     t.bigint "organization_id", null: false
+    t.string "role_type"
     t.string "key"
     t.datetime "expires_at"
     t.datetime "created_at", precision: 6, null: false
@@ -163,6 +161,18 @@ ActiveRecord::Schema.define(version: 2022_11_24_141838) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["organization_id"], name: "index_leads_on_organization_id"
+  end
+
+  create_table "modal_award_templates", force: :cascade do |t|
+    t.bigint "award_id", null: false
+    t.string "title"
+    t.string "description"
+    t.string "text_submit"
+    t.string "primary_color"
+    t.string "secondary_color"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["award_id"], name: "index_modal_award_templates_on_award_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -186,6 +196,30 @@ ActiveRecord::Schema.define(version: 2022_11_24_141838) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
+  end
+
+  create_table "page_award_templates", force: :cascade do |t|
+    t.bigint "award_id", null: false
+    t.string "title"
+    t.string "description"
+    t.string "text_submit"
+    t.string "primary_color"
+    t.string "secondary_color"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["award_id"], name: "index_page_award_templates_on_award_id"
+  end
+
+  create_table "reward_templates", force: :cascade do |t|
+    t.bigint "award_id", null: false
+    t.string "title"
+    t.string "description"
+    t.string "text_submit"
+    t.string "primary_color"
+    t.string "secondary_color"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["award_id"], name: "index_reward_templates_on_award_id"
   end
 
   create_table "rewards", force: :cascade do |t|
@@ -229,16 +263,20 @@ ActiveRecord::Schema.define(version: 2022_11_24_141838) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "affiliate_leads", "affiliates"
+  add_foreign_key "affiliate_leads", "leads"
   add_foreign_key "affiliates", "organizations"
   add_foreign_key "award_affiliates", "affiliates"
   add_foreign_key "award_affiliates", "awards"
   add_foreign_key "award_histories", "organizations"
-  add_foreign_key "award_templates", "awards"
   add_foreign_key "awards", "organizations"
   add_foreign_key "clients", "organizations"
   add_foreign_key "interaction_logs", "organizations"
   add_foreign_key "invites", "organizations"
   add_foreign_key "leads", "organizations"
+  add_foreign_key "modal_award_templates", "awards"
+  add_foreign_key "page_award_templates", "awards"
+  add_foreign_key "reward_templates", "awards"
   add_foreign_key "rewards", "affiliates"
   add_foreign_key "rewards", "award_histories"
   add_foreign_key "rewards", "leads"

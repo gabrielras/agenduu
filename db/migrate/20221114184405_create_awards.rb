@@ -3,6 +3,7 @@ class CreateAwards < ActiveRecord::Migration[6.1]
     create_table :awards do |t|
       t.references :organization, null: false, foreign_key: true
 
+      t.string :type_of_award
       t.string :to_affiliate
       t.string :to_lead
       t.string :rule

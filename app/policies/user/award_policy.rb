@@ -21,6 +21,10 @@ class User::AwardPolicy < ApplicationPolicy
     new?
   end
 
+  def show?
+    new?
+  end
+
   class Scope
     def initialize(user, scope)
       @user  = user

@@ -1,10 +1,15 @@
 class Affiliate < ApplicationRecord
-  friendly_id :title, use: :slugged
+  #friendly_id :phone_number, use: :slugged
 
   belongs_to :organization
 
   has_many :award_affiliates, dependent: :destroy
   has_many :awards,through: :award_affiliates
+
+  has_one :affiliate_lead, dependent: :destroy
+  has_one :lead, through: :affiliate_lead
+
+  accepts_nested_attributes_for :lead, reject_if: :all_blank, allow_destroy: true
 
   validates :full_name, presence: true
   validates :email, presence: true

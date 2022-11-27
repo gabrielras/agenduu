@@ -13,7 +13,7 @@ class Organization < ApplicationRecord
   validates :title, presence: true
   validates :phone_number, presence: true
 
-  validates :title, uniqueness: { scope: :organization_id }
+  validates :title, uniqueness: true
 
   validates :email, format: { with: /\A[^@\s]+@[^@\s]+\z/ }, presence: true
 end

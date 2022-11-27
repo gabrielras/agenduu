@@ -4,8 +4,6 @@ class User::OrganizationsController < UserController
   before_action :set_organization, only: %i[edit update]
 
   def new
-    authorize Organization
-
     @organization = Organization.new
   end
 
@@ -16,9 +14,9 @@ class User::OrganizationsController < UserController
       owner: current_user,
       attributes: organization_params
     )
-    byebug
+
     if result.success?
-      redirect_to user_groups_path(subdomain: result.organization.slug), notice: 'Sua organização foi cadastrada'
+      redirect_to user_awards_path(subdomain: result.organization.slug), notice: 'Sua organização foi cadastrada'
     else
       flash[:alert] = result.error
       @organization = result.organization

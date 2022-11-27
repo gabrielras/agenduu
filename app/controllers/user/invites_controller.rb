@@ -4,13 +4,9 @@ class User::InvitesController < UserController
   before_action :set_invite, only: %i[destroy]
 
   def index
-    @q = policy_scope(Invite).where(group: nil).ransack(params[:q])
+    @q = policy_scope(Invite).ransack(params[:q])
     result = @q.result(distinct: true).order(created_at: :desc)
     @pagy, @invites = pagy(result, items: 10)
-  end
-
-  def new
-    @invite = Invite.new
   end
   
   def create
@@ -41,7 +37,7 @@ class User::InvitesController < UserController
 
   def invite_params
     params.require(:invite).permit(:role_type, :email)
-      .merge(organization: current_user.decorate.provider).to_h
+      .merge(organization: current_user.organization).to_h
   end
 
   def set_invite

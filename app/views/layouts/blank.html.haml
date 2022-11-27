@@ -1,0 +1,16 @@
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width initial-scale=1", :name => "viewport"}/
+    %meta{:content => "black", :name => "theme-color"}/
+    %link{:href => "https://fonts.googleapis.com", :rel => "preconnect"}/
+    %link{:crossorigin => "", :href => "https://fonts.gstatic.com", :rel => "preconnect"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application'
+    = javascript_include_tag 'application', media: 'all'    
+  %body
+    = yield

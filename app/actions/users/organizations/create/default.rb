@@ -10,17 +10,13 @@ module Users
         output :organization, type: Organization
 
         def call
-          ActiveRecord::Base.transaction do
-            self.organization = Organization.new(attributes)
-            organization.save!
+          self.organization = Organization.new(attributes)
+          organization.save!
 
-            if Role.where(organization: organization, user: owner).present?
-              fail!(error: 'Seu e-mail já tem cadastro como uma empresa.')
-            end
-            Role.create!(role_type: 'owner', user: owner, organization: organization)
+          if Role.where(organization: organization, user: owner).present?
+            fail!(error: 'Seu e-mail já tem cadastro como uma empresa.')
           end
-        rescue StandardError => e
-          fail!(error: e.message)
+          Role.create!(role_type: 'owner', user: owner, organization: organization)
         end
       end
     end

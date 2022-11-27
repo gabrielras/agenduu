@@ -9,17 +9,28 @@ Rails.application.routes.draw do
 
   root 'user/environments#index'
 
-  namespace :common do
-    resources :environments, only: [:index]
-  end
-
   constraints subdomain: /.*/ do  
     namespace :user do
       resources :organizations, except: [:index, :destroy, :show]
       resources :users, except: [:show]
-      resources :invites, except: [:show, :update, :edit]
-      resources :awards, except: [:show, :update, :edit]
+      resources :affiliates, only: [:index]
+      resources :invites, only: [:new, :update, :create]
+      resources :awards do
+        resources :modal_award_templates, only: [:edit, :update]
+        resources :page_award_templates, only: [:edit, :update]
+        resources :reward_templates, only: [:edit, :update]
+      end
+
+      resources :partnership_awards do
+        resources :modal_award_templates, only: [:edit, :update]
+        resources :page_award_templates, only: [:edit, :update]
+        resources :reward_templates, only: [:edit, :update]
+      end
+
+      resources :rewards, except: [:show, :update, :edit]
       resources :dashboards,  only: [:index]
+      resources :notifications, only: [:index, :update]
+      resources :environments, only: [:index]
     end
 
     devise_for :clients, controllers: {

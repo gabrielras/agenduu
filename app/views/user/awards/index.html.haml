@@ -1,0 +1,28 @@
+.content-wrapper
+  / Content
+  .container-xxl.flex-grow-1.container-p-y
+    .col-md-12.mx-auto
+
+      %h4.fw-bold.py-3.mb-4
+        Prêmios
+        %span.text-muted.fw-light / Empresa
+
+      %hr.my-5
+      
+      .card
+        .row.p-5.mb-5.align-items-center
+          .col-lg-8
+            .masthead-followup-icon.d-inline-block.mb-3{style: "--bg-rgb: var(--bd-violet-rgb);"}
+              %svg{fill: "currentColor", focusable: "false", height: "32", viewbox: "0 0 16 16", width: "32", xmlns: "http://www.w3.org/2000/svg"}
+                %path{"clip-rule" => "evenodd", d: "M8 16a6 6 0 006-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 006 6zM6.646 4.646c-.376.377-1.272 1.489-2.093 3.13l.894.448c.78-1.559 1.616-2.58 1.907-2.87l-.708-.708z", "fill-rule" => "evenodd"}
+            %h2.display-5.mb-3.fw-semibold.lh-sm Crie sua Primeira Campanha de Indicação
+            %p.lead.fw-normal
+              Converta seus visitantes em indicadores, consiga mais clientes.
+             
+            %p.d-flex.justify-content-start.lead.fw-normal.mb-md-0
+              = link_to new_user_award_path, class: 'btn btn-dark' do
+                %i.menu-icon.tf-icons.bx.bx-rocket
+                Cadastrar
+
+          .col-lg-4
+            = image_tag 'Generating new leads-pana.svg', style: 'height: 300px;'

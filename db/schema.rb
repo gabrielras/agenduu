@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_26_134345) do
+ActiveRecord::Schema.define(version: 2022_11_25_134422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "access_metrics", force: :cascade do |t|
+    t.string "usable_type"
+    t.bigint "usable_id"
+    t.bigint "organization_id", null: false
+    t.string "situation"
+    t.jsonb "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_access_metrics_on_organization_id"
+    t.index ["usable_type", "usable_id"], name: "index_access_metrics_on_usable"
+  end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -53,15 +65,6 @@ ActiveRecord::Schema.define(version: 2022_11_26_134345) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "affiliate_leads", force: :cascade do |t|
-    t.bigint "affiliate_id", null: false
-    t.bigint "lead_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["affiliate_id"], name: "index_affiliate_leads_on_affiliate_id"
-    t.index ["lead_id"], name: "index_affiliate_leads_on_lead_id"
-  end
-
   create_table "affiliates", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "full_name"
@@ -73,35 +76,6 @@ ActiveRecord::Schema.define(version: 2022_11_26_134345) do
     t.string "slug"
     t.index ["organization_id"], name: "index_affiliates_on_organization_id"
     t.index ["slug"], name: "index_affiliates_on_slug", unique: true
-  end
-
-  create_table "award_affiliates", force: :cascade do |t|
-    t.bigint "award_id", null: false
-    t.bigint "affiliate_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["affiliate_id"], name: "index_award_affiliates_on_affiliate_id"
-    t.index ["award_id"], name: "index_award_affiliates_on_award_id"
-  end
-
-  create_table "award_histories", force: :cascade do |t|
-    t.bigint "organization_id", null: false
-    t.jsonb "data"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_award_histories_on_organization_id"
-  end
-
-  create_table "awards", force: :cascade do |t|
-    t.bigint "organization_id", null: false
-    t.string "type_of_award"
-    t.string "to_affiliate"
-    t.string "to_lead"
-    t.string "rule"
-    t.string "business_cell_phone"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_awards_on_organization_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -132,17 +106,6 @@ ActiveRecord::Schema.define(version: 2022_11_26_134345) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
-  create_table "interaction_logs", force: :cascade do |t|
-    t.string "usable_type"
-    t.bigint "usable_id"
-    t.bigint "organization_id", null: false
-    t.string "situation"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_interaction_logs_on_organization_id"
-    t.index ["usable_type", "usable_id"], name: "index_interaction_logs_on_usable"
-  end
-
   create_table "invites", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "role_type"
@@ -161,18 +124,6 @@ ActiveRecord::Schema.define(version: 2022_11_26_134345) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["organization_id"], name: "index_leads_on_organization_id"
-  end
-
-  create_table "modal_award_templates", force: :cascade do |t|
-    t.bigint "award_id", null: false
-    t.string "title"
-    t.string "description"
-    t.string "text_submit"
-    t.string "primary_color"
-    t.string "secondary_color"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["award_id"], name: "index_modal_award_templates_on_award_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -198,39 +149,49 @@ ActiveRecord::Schema.define(version: 2022_11_26_134345) do
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 
-  create_table "page_award_templates", force: :cascade do |t|
-    t.bigint "award_id", null: false
+  create_table "partnerships", force: :cascade do |t|
+    t.bigint "organization_id", null: false
     t.string "title"
+    t.string "subtitle"
     t.string "description"
-    t.string "text_submit"
+    t.string "title_form"
+    t.string "subtitle_form"
+    t.string "rule_title"
+    t.string "rule_description"
+    t.string "background_color"
     t.string "primary_color"
     t.string "secondary_color"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["award_id"], name: "index_page_award_templates_on_award_id"
+    t.index ["organization_id"], name: "index_partnerships_on_organization_id"
   end
 
-  create_table "reward_templates", force: :cascade do |t|
-    t.bigint "award_id", null: false
-    t.string "title"
-    t.string "description"
-    t.string "text_submit"
-    t.string "primary_color"
-    t.string "secondary_color"
+  create_table "reward_affiliates", force: :cascade do |t|
+    t.bigint "reward_id", null: false
+    t.bigint "affiliate_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["award_id"], name: "index_reward_templates_on_award_id"
+    t.index ["affiliate_id"], name: "index_reward_affiliates_on_affiliate_id"
+    t.index ["reward_id"], name: "index_reward_affiliates_on_reward_id"
+  end
+
+  create_table "reward_leads", force: :cascade do |t|
+    t.bigint "reward_id", null: false
+    t.bigint "lead_id", null: false
+    t.jsonb "reward_story"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lead_id"], name: "index_reward_leads_on_lead_id"
+    t.index ["reward_id"], name: "index_reward_leads_on_reward_id"
   end
 
   create_table "rewards", force: :cascade do |t|
-    t.bigint "affiliate_id", null: false
-    t.bigint "award_history_id", null: false
-    t.bigint "lead_id", null: false
+    t.bigint "partnership_id", null: false
+    t.string "description"
+    t.string "username"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["affiliate_id"], name: "index_rewards_on_affiliate_id"
-    t.index ["award_history_id"], name: "index_rewards_on_award_history_id"
-    t.index ["lead_id"], name: "index_rewards_on_lead_id"
+    t.index ["partnership_id"], name: "index_rewards_on_partnership_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -261,25 +222,19 @@ ActiveRecord::Schema.define(version: 2022_11_26_134345) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "access_metrics", "organizations"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "affiliate_leads", "affiliates"
-  add_foreign_key "affiliate_leads", "leads"
   add_foreign_key "affiliates", "organizations"
-  add_foreign_key "award_affiliates", "affiliates"
-  add_foreign_key "award_affiliates", "awards"
-  add_foreign_key "award_histories", "organizations"
-  add_foreign_key "awards", "organizations"
   add_foreign_key "clients", "organizations"
-  add_foreign_key "interaction_logs", "organizations"
   add_foreign_key "invites", "organizations"
   add_foreign_key "leads", "organizations"
-  add_foreign_key "modal_award_templates", "awards"
-  add_foreign_key "page_award_templates", "awards"
-  add_foreign_key "reward_templates", "awards"
-  add_foreign_key "rewards", "affiliates"
-  add_foreign_key "rewards", "award_histories"
-  add_foreign_key "rewards", "leads"
+  add_foreign_key "partnerships", "organizations"
+  add_foreign_key "reward_affiliates", "affiliates"
+  add_foreign_key "reward_affiliates", "rewards"
+  add_foreign_key "reward_leads", "leads"
+  add_foreign_key "reward_leads", "rewards"
+  add_foreign_key "rewards", "partnerships"
   add_foreign_key "roles", "organizations"
   add_foreign_key "roles", "users"
 end

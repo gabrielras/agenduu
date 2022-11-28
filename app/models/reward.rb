@@ -1,5 +1,9 @@
 class Reward < ApplicationRecord
-  belongs_to :affiliate
-  belongs_to :award_history
-  belongs_to :lead
+  belongs_to :partnership
+
+  has_many :reward_affiliates, dependent: :destroy
+  has_many :reward_leads, dependent: :destroy
+
+  validates :description, presence: true
+  validates :username, presence: true
 end

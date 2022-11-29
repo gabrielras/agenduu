@@ -13,21 +13,12 @@ Rails.application.routes.draw do
     namespace :user do
       resources :organizations, except: [:index, :destroy, :show]
       resources :users, except: [:show]
-      resources :affiliates, only: [:index]
+      resources :affiliates, only: [:index, :show] do
+        resources :rewards, except: [:index, :show, :destroy]
+      end
       resources :invites, only: [:new, :update, :create]
-      resources :awards do
-        resources :modal_award_templates, only: [:edit, :update]
-        resources :page_award_templates, only: [:edit, :update]
-        resources :reward_templates, only: [:edit, :update]
-      end
-
-      resources :partnership_awards do
-        resources :modal_award_templates, only: [:edit, :update]
-        resources :page_award_templates, only: [:edit, :update]
-        resources :reward_templates, only: [:edit, :update]
-      end
-
-      resources :rewards, except: [:show, :update, :edit]
+      resources :partnerships
+      resources :rewards
       resources :dashboards,  only: [:index]
       resources :notifications, only: [:index, :update]
       resources :environments, only: [:index]

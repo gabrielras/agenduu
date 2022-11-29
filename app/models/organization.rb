@@ -6,7 +6,7 @@ class Organization < ApplicationRecord
 
   has_many :affiliates, dependent: :destroy
   has_many :leads, dependent: :destroy
-  has_many :rewards, through: :awards
+  has_many :rewards, dependent: :destroy
   has_many :clients, dependent: :destroy
   has_many :roles, dependent: :destroy
   has_many :users, through: :roles

@@ -4,8 +4,10 @@ module Users
   module Organizations
     module Create
       class Received < Actor
-        ActiveRecord::Base.transaction do
-          play Default, Invites
+        play Default, Invites, Partnerships, Rewards
+
+        def rollback
+          organization.destroy
         end
       end
     end

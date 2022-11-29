@@ -186,12 +186,15 @@ ActiveRecord::Schema.define(version: 2022_11_25_134422) do
   end
 
   create_table "rewards", force: :cascade do |t|
-    t.bigint "partnership_id", null: false
-    t.string "description"
+    t.bigint "organization_id", null: false
+    t.string "type_of_reward"
+    t.string "social_network"
     t.string "username"
+    t.string "to_affiliate"
+    t.string "to_lead"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["partnership_id"], name: "index_rewards_on_partnership_id"
+    t.index ["organization_id"], name: "index_rewards_on_organization_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -234,7 +237,7 @@ ActiveRecord::Schema.define(version: 2022_11_25_134422) do
   add_foreign_key "reward_affiliates", "rewards"
   add_foreign_key "reward_leads", "leads"
   add_foreign_key "reward_leads", "rewards"
-  add_foreign_key "rewards", "partnerships"
+  add_foreign_key "rewards", "organizations"
   add_foreign_key "roles", "organizations"
   add_foreign_key "roles", "users"
 end

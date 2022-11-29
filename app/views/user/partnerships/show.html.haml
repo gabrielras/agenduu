@@ -20,7 +20,7 @@
                   This is a wider card with supporting text below as a natural lead-in to additional content.
                   This content is a little bit longer.
                 %p.card-text
-                  = link_to new_user_award_path, class: 'btn btn-primary' do
+                  = link_to edit_user_partnership_path(current_user.organization.partnership), class: 'btn btn-primary' do
                     %i.menu-icon.tf-icons.bx.bx-edit
                     Editar
 
@@ -33,10 +33,7 @@
                   This is a wider card with supporting text below as a natural lead-in to additional content.
                   This content is a little bit longer.
                 %p.card-text
-                  = link_to edit_user_award_page_award_template_path(@award, @award.page_award_template), class: 'btn btn-primary' do
-                    %i.menu-icon.tf-icons.bx.bx-edit
-                    Editar
-                  = link_to new_user_award_path, class: 'btn btn-warning mx-1' do
+                  = link_to  edit_user_partnership_path(current_user.organization.partnership), class: 'btn btn-warning mx-1' do
                     %i.menu-icon.tf-icons.bx.bx-copy
                     Link da Página
 
@@ -44,9 +41,6 @@
             %h5.card-header Adicione o Card no seu Site
             .card-body
               %p Display content from social accounts on your site
-              = link_to edit_user_award_modal_award_template_path(@award, @award.modal_award_template), class: 'btn btn-primary' do
-                %i.menu-icon.tf-icons.bx.bx-edit
-                Editar
               %hr
               .card.bg-dark
                 .card-body
@@ -54,4 +48,3 @@
                     %code
                       %span
                         %span.text-white npm i bootstrap@5.2.3
-                  

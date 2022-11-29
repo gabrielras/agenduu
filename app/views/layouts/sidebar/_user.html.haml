@@ -31,19 +31,15 @@
     %ul.menu-inner.py-1
       / Dashboard
       %li.menu-item
-        = link_to user_awards_path, class: 'menu-link' do
+        = link_to user_partnership_path(current_user.organization.partnership), class: 'menu-link' do
           %i.menu-icon.tf-icons.bx.bx-trophy
-          Prêmio
-      %li.menu-item
-        = link_to user_awards_path, class: 'menu-link' do
-          %i.menu-icon.tf-icons.bx.bx-rocket
-          Parcerias
-      %li.menu-item
-        = link_to user_awards_path, class: 'menu-link' do
-          %i.menu-icon.tf-icons.bx.bx-award
-          Recompensa
+          Campanha de Afiliados
       %li.menu-item
         = link_to user_rewards_path, class: 'menu-link' do
+          %i.menu-icon.tf-icons.bx.bx-award
+          Recompensas
+      %li.menu-item
+        = link_to user_affiliates_path, class: 'menu-link' do
           %i.menu-icon.tf-icons.bx.bx-happy-heart-eyes
           Afiliados
       %li.menu-item

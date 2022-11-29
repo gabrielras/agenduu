@@ -10,8 +10,11 @@ module Common
 
       def call
         ActiveRecord::Base.transaction do
-          affiliate = Affiliate.new(attributes.merge(organization_id: organization_id))
-          affiliate.save!
+          affiliate = Affiliate.find_by(email: attributes[:email]) || Affiliate.find_by(phone_number: attributes[:phone_number])
+          if affiliate.blank?
+            affiliate = Affiliate.new(attributes.merge(organization_id: organization_id))
+            affiliate.save!
+          end
 
           self.link = generate_link
         end
@@ -20,7 +23,7 @@ module Common
       private
 
       def generate_link
-
+        
       end
     end
   end

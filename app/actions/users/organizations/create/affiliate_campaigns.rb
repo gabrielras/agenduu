@@ -3,11 +3,11 @@
 module Users
   module Organizations
     module Create
-      class Partnerships < Actor 
+      class AffiliateCampaigns < Actor 
         input :organization, type: Organization
 
         def call
-          Partnership.create!(
+          AffiliateCampaign.create!(
             organization_id: organization.id,
             title: 'Crie sua Primeira Campanha de Indicação 👋',
             subtitle: 'Ganhe 20 R$ por indicação',

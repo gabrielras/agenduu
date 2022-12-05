@@ -1,6 +1,6 @@
-class CreatePartnerships < ActiveRecord::Migration[6.1]
+class CreateCampaigns < ActiveRecord::Migration[6.1]
   def change
-    create_table :partnerships do |t|
+    create_table :campaigns do |t|
       t.references :organization, null: false, foreign_key: true
 
       t.string :title

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
         resources :rewards, except: [:index, :show, :destroy]
       end
       resources :invites, only: [:new, :update, :create]
-      resources :partnerships
+      resources :affiliate_campaigns
       resources :rewards
       resources :dashboards,  only: [:index]
       resources :notifications, only: [:index, :update]

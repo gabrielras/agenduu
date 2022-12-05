@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class User::PartnershipsController < UserController
-  before_action :set_partnership
+class User::AffiliateCampaignsController < UserController
+  before_action :set_affiliate_campaign
 
   def show; end
 
@@ -16,13 +16,13 @@ class User::PartnershipsController < UserController
   end
 
   def update
-    result = ::Users::Partnerships::Update.result(
-      attributes: partnerships_params,
-      partnership: @partnership
+    result = ::Users::AffiliateCampaigns::Update.result(
+      attributes: affiliate_campaigns_params,
+      affiliate_campaign: @affiliate_campaign
     )
 
     if result.success?
-      redirect_to user_partnership_path(@partnership), notice: 'atualizado'
+      redirect_to user_affiliate_campaign_path(@affiliate_campaign), notice: 'atualizado'
     else
       flash[:alert] = result.error
 
@@ -32,15 +32,15 @@ class User::PartnershipsController < UserController
 
   private
 
-  def partnership_params
-    params.require(:partnership).permit(
+  def affiliate_campaign_params
+    params.require(:affiliate_campaign).permit(
       :title, :subtitle, :description, :title_form, :subtitle_form,
       :rule_title, :rule_description, :background_color, :primary_color, :secondary_color,
       rewards_attributes: [:id, :to_affiliate, :to_lead, :social_network, :username]
     ).merge(organization: current_user.organization).to_h
   end
 
-  def set_partnership
-    @partnership = policy_scope(Partnership).find(params[:id])
+  def set_affiliate_campaign
+    @affiliate_campaign = policy_scope(AffiliateCampaign).find(params[:id])
   end
 end

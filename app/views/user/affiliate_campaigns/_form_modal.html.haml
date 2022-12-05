@@ -5,8 +5,8 @@
         .modal-header
           %h5.modal-title Parceria
           %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", type: "button"}
-        = form_with model: partnership,
-                    url: user_partnership_path(id: partnership.id),
+        = form_with model: affiliate_campaign,
+                    url: user_affiliate_campaign_path(id: affiliate_campaign.id),
                     method: :put,
                     html: { class: 'require-validation' }, validate: true do |f|
           .modal-body

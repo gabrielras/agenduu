@@ -16,7 +16,7 @@ class User::OrganizationsController < UserController
     )
 
     if result.success?
-      redirect_to user_partnership_path(subdomain: result.organization.slug, id: result.organization.partnership), notice: 'Sua organização foi cadastrada'
+      redirect_to user_affiliate_campaign_path(subdomain: result.organization.slug, id: result.organization.affiliate_campaign), notice: 'Sua organização foi cadastrada'
     else
       flash[:alert] = result.error
       @organization = result.organization

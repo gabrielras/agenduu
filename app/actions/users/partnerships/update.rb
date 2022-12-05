@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 module Users
-  module Partnerships
+  module AffiliateCampaigns
     class Update < Actor
       input :attributes, type: Hash
-      input :partnership, type: Partnership
+      input :affiliate_campaign, type: AffiliateCampaign
 
       def call
         ActiveRecord::Base.transaction do
-          self.partnership.update!(attributes)
+          self.affiliate_campaign.update!(attributes)
 
-          partnership.organization.decorate.reward_main.update!(reward_params)
+          affiliate_campaign.organization.decorate.reward_main.update!(reward_params)
         end
       rescue StandardError => e
         fail!(error: e.message)
@@ -18,7 +18,7 @@ module Users
 
       private
 
-      def partnership_params
+      def affiliate_campaign_params
         attributes.execept(:rewards_attributes)
       end
 

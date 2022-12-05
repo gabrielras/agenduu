@@ -9,5 +9,8 @@ class CreateOrganizations < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_column :organizations, :slug, :string
+    add_index :organizations, :slug, unique: true
   end
 end

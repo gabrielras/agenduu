@@ -2,7 +2,7 @@ class Organization < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :slugged
 
-  has_one :partnership, dependent: :destroy
+  has_one :affiliate_campaign, dependent: :destroy
 
   has_many :affiliates, dependent: :destroy
   has_many :leads, dependent: :destroy

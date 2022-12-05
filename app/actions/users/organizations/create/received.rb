@@ -4,7 +4,7 @@ module Users
   module Organizations
     module Create
       class Received < Actor
-        play Default, Invites, Partnerships, Rewards
+        play Default, Invites, AffiliateCampaigns, Rewards
 
         def rollback
           organization.destroy

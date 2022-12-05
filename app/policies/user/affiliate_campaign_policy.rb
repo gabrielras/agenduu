@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User::PartnershipPolicy < ApplicationPolicy
+class User::AffiliateCampaignPolicy < ApplicationPolicy
   def affiliate?
     true
   end

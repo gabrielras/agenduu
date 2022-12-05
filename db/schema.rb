@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 2022_11_25_134422) do
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 
-  create_table "partnerships", force: :cascade do |t|
+  create_table "affiliate_campaigns", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "title"
     t.string "subtitle"
@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(version: 2022_11_25_134422) do
     t.string "secondary_color"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["organization_id"], name: "index_partnerships_on_organization_id"
+    t.index ["organization_id"], name: "index_affiliate_campaigns_on_organization_id"
   end
 
   create_table "reward_affiliates", force: :cascade do |t|
@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 2022_11_25_134422) do
   add_foreign_key "clients", "organizations"
   add_foreign_key "invites", "organizations"
   add_foreign_key "leads", "organizations"
-  add_foreign_key "partnerships", "organizations"
+  add_foreign_key "affiliate_campaigns", "organizations"
   add_foreign_key "reward_affiliates", "affiliates"
   add_foreign_key "reward_affiliates", "rewards"
   add_foreign_key "reward_leads", "leads"

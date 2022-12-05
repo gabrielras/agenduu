@@ -1,4 +1,4 @@
-class Partnership < ApplicationRecord
+class AffiliateCampaign < ApplicationRecord
   belongs_to :organization
 
   validates :title, length: { minimum: 5, maximum: 80 }, allow_blank: true

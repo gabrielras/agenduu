@@ -31,7 +31,7 @@
     %ul.menu-inner.py-1
       / Dashboard
       %li.menu-item
-        = link_to user_partnership_path(current_user.organization.partnership), class: 'menu-link' do
+        = link_to user_affiliate_campaign_path(current_user.organization.affiliate_campaign), class: 'menu-link' do
           %i.menu-icon.tf-icons.bx.bx-trophy
           Campanha de Afiliados
       %li.menu-item

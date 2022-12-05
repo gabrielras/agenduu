@@ -1,0 +1,2 @@
+class CreateCallToAction < ApplicationRecord
+end
